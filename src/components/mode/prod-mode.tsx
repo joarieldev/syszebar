@@ -1,0 +1,23 @@
+import { createStore } from "solid-js/store";
+import { Bar } from "../bar";
+import { createProviderGroup } from "zebar";
+
+const providers = createProviderGroup({
+  cpu: { type: "cpu", refreshInterval: 1000 },
+  date: { type: "date" },
+  battery: { type: "battery" },
+  memory: { type: "memory" },
+});
+
+type OutputMap = typeof providers.outputMap;
+
+export const ProdMode = () => {
+  const [output, setOutput] = createStore<OutputMap>(providers.outputMap);
+
+  providers.onOutput((outputMap) => {
+    console.log("Received output:", outputMap.cpu?.usage);
+    setOutput(outputMap)
+  });
+
+  return <Bar provider={output} />;
+};
