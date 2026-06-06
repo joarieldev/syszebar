@@ -10,7 +10,7 @@ interface Props {
 
 export const Bar = (props: Props) => {
   return (
-    <main class="grid grid-cols-[1fr_1fr_1fr] h-7 items-center bg-black/75 px-[1vw] text-white text-base border border-gray-300/75 rounded-lg mx-2.5">
+    <main class="grid grid-cols-[1fr_1fr_1fr] h-[30px] items-center bg-black/75 px-[1vw] text-white text-base border border-gray-300/75 rounded-lg mx-2.5">
       <div class="flex justify-start">SYSZEBAR</div>
       <div class="flex justify-center">
         <Clock date={props.provider.date} />
