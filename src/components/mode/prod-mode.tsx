@@ -7,6 +7,7 @@ const providers = createProviderGroup({
   date: { type: "date" },
   battery: { type: "battery" },
   memory: { type: "memory" },
+  weather: { type: "weather" },
 });
 
 type OutputMap = typeof providers.outputMap;

@@ -3,6 +3,7 @@ import { Battery } from "./battery";
 import { Clock } from "./clock";
 import { Cpu } from "./cpu";
 import { Memory } from "./memory";
+import { Weather } from "./weather";
 
 interface Props {
   provider: IProviders;
@@ -10,7 +11,7 @@ interface Props {
 
 export const Bar = (props: Props) => {
   return (
-    <main class="grid grid-cols-[1fr_1fr_1fr] h-[30px] items-center bg-black/75 px-[1vw] text-white text-base border border-gray-300/75 rounded-lg mx-2.5">
+    <main class="grid grid-cols-[1fr_1fr_1fr] h-7.5 items-center bg-black/75 px-[1vw] text-white text-base border border-gray-300/75 rounded-lg mx-2.5">
       <div class="flex justify-start">SYSZEBAR</div>
       <div class="flex justify-center">
         <Clock date={props.provider.date} />
@@ -19,6 +20,7 @@ export const Bar = (props: Props) => {
         <Memory memory={props.provider.memory} />
         <Cpu cpu={props.provider.cpu} />
         <Battery battery={props.provider.battery} />
+        <Weather weather={props.provider.weather} />
       </div>
     </main>
   );

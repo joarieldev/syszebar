@@ -3,6 +3,7 @@ import type {
   CpuOutput,
   DateOutput,
   MemoryOutput,
+  WeatherOutput,
 } from "zebar";
 
 export type IProviders = {
@@ -10,6 +11,7 @@ export type IProviders = {
   cpu: CpuOutput | null;
   date: DateOutput | null;
   memory: MemoryOutput | null;
+  weather: WeatherOutput | null;
 };
 
 export const mockProviders: IProviders = {
@@ -48,5 +50,13 @@ export const mockProviders: IProviders = {
     freeSwap: 8_000_000_000,
     usedSwap: 1_000_000_000,
     totalSwap: 9_000_000_000,
+  },
+
+  weather: {
+    isDaytime: true,
+    status: "clear_day",
+    celsiusTemp: 24,
+    fahrenheitTemp: 75,
+    windSpeed: 12,
   },
 };
