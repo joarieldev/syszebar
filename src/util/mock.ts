@@ -1,7 +1,6 @@
 import type {
   BatteryOutput,
   CpuOutput,
-  DateOutput,
   MemoryOutput,
   NetworkOutput,
   WeatherOutput,
@@ -10,7 +9,6 @@ import type {
 export type IProviders = {
   battery: BatteryOutput | null;
   cpu: CpuOutput | null;
-  date: DateOutput | null;
   memory: MemoryOutput | null;
   network: NetworkOutput | null;
   weather: WeatherOutput | null;
@@ -36,14 +34,6 @@ export const mockProviders: IProviders = {
     physicalCoreCount: 8,
     vendor: "GenuineIntel",
   },
-
-  date: {
-    formatted: "2026-06-03 15:00",
-    new: new Date(),
-    now: Date.now(),
-    iso: new Date().toISOString(),
-  },
-
   memory: {
     usage: 54,
     freeMemory: 16_000_000_000,

@@ -3,11 +3,10 @@ import { Bar } from "../bar";
 import { createProviderGroup } from "zebar";
 
 const providers = createProviderGroup({
-  cpu: { type: "cpu", refreshInterval: 1000 },
-  date: { type: "date" },
+  cpu: { type: "cpu", refreshInterval: 2000 },
   battery: { type: "battery" },
-  memory: { type: "memory" },
-  network: { type: "network", refreshInterval: 1000 },
+  memory: { type: "memory", refreshInterval: 5000 },
+  network: { type: "network", refreshInterval: 3000 },
   weather: { type: "weather" },
 });
 
@@ -17,7 +16,6 @@ export const ProdMode = () => {
   const [output, setOutput] = createStore<OutputMap>(providers.outputMap);
 
   providers.onOutput((outputMap) => {
-    console.log("Received output:", outputMap.cpu?.usage);
     setOutput(outputMap)
   });
 
