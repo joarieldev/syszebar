@@ -3,6 +3,7 @@ import type {
   CpuOutput,
   DateOutput,
   MemoryOutput,
+  NetworkOutput,
   WeatherOutput,
 } from "zebar";
 
@@ -11,6 +12,7 @@ export type IProviders = {
   cpu: CpuOutput | null;
   date: DateOutput | null;
   memory: MemoryOutput | null;
+  network: NetworkOutput | null;
   weather: WeatherOutput | null;
 };
 
@@ -51,12 +53,40 @@ export const mockProviders: IProviders = {
     usedSwap: 1_000_000_000,
     totalSwap: 9_000_000_000,
   },
-
   weather: {
     isDaytime: true,
     status: "clear_day",
     celsiusTemp: 24,
     fahrenheitTemp: 75,
     windSpeed: 12,
+  },
+  network: {
+    defaultInterface: {
+      name: "eth0",
+      friendlyName: "Ethernet",
+      description: "Realtek PCIe GbE Family Controller",
+      type: "wifi",
+      ipv4Addresses: ["192.168.1.100"],
+      ipv6Addresses: ["fe80::1"],
+      macAddress: "00:1a:2b:3c:4d:5e",
+      transmitSpeed: 1_000_000_000,
+      receiveSpeed: 1_000_000_000,
+      dnsServers: ["8.8.8.8"],
+      isDefault: true,
+    },
+    defaultGateway: {
+      macAddress: "00:1a:2b:3c:4d:5f",
+      ipv4Addresses: ["192.168.1.1"],
+      ipv6Addresses: [],
+      ssid: null,
+      signalStrength: null,
+    },
+    interfaces: [],
+    traffic: {
+      received: { bytes: 1_250_000, siValue: 1.25, siUnit: "MB", iecValue: 1.19, iecUnit: "MiB" },
+      totalReceived: { bytes: 500_000_000_000, siValue: 500, siUnit: "GB", iecValue: 465.66, iecUnit: "GiB" },
+      transmitted: { bytes: 320_000, siValue: 0.32, siUnit: "MB", iecValue: 0.31, iecUnit: "MiB" },
+      totalTransmitted: { bytes: 100_000_000_000, siValue: 100, siUnit: "GB", iecValue: 93.13, iecUnit: "GiB" },
+    },
   },
 };

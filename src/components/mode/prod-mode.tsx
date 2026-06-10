@@ -7,6 +7,7 @@ const providers = createProviderGroup({
   date: { type: "date" },
   battery: { type: "battery" },
   memory: { type: "memory" },
+  network: { type: "network", refreshInterval: 1000 },
   weather: { type: "weather" },
 });
 

@@ -3,6 +3,7 @@ import { Battery } from "./battery";
 import { Clock } from "./clock";
 import { Cpu } from "./cpu";
 import { Memory } from "./memory";
+import { Network } from "./network";
 import { Weather } from "./weather";
 
 interface Props {
@@ -17,6 +18,7 @@ export const Bar = (props: Props) => {
         <Clock date={props.provider.date} />
       </div>
       <div class="flex justify-end gap-4">
+        <Network network={props.provider.network} />
         <Memory memory={props.provider.memory} />
         <Cpu cpu={props.provider.cpu} />
         <Battery battery={props.provider.battery} />
