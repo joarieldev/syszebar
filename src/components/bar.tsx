@@ -5,6 +5,7 @@ import { Cpu } from "./cpu";
 import { Memory } from "./memory";
 import { Network } from "./network";
 import { Weather } from "./weather";
+import { Glazewm } from "./glazewm";
 
 interface Props {
   provider: IProviders;
@@ -13,7 +14,9 @@ interface Props {
 export const Bar = (props: Props) => {
   return (
     <main class="grid grid-cols-[1fr_1fr_1fr] h-7.5 items-center bg-black/75 px-[1vw] text-white text-base border border-gray-300/75 rounded-lg mx-2.5">
-      <div class="flex justify-start">SYSZEBAR</div>
+      <div class="flex justify-start">
+        <Glazewm glazewm={props.provider.glazewm} />
+      </div>
       <div class="flex justify-center">
         <Clock />
       </div>

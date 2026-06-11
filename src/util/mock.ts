@@ -1,6 +1,7 @@
 import type {
   BatteryOutput,
   CpuOutput,
+  GlazeWmOutput,
   MemoryOutput,
   NetworkOutput,
   WeatherOutput,
@@ -9,6 +10,7 @@ import type {
 export type IProviders = {
   battery: BatteryOutput | null;
   cpu: CpuOutput | null;
+  glazewm: GlazeWmOutput | null;
   memory: MemoryOutput | null;
   network: NetworkOutput | null;
   weather: WeatherOutput | null;
@@ -34,6 +36,34 @@ export const mockProviders: IProviders = {
     physicalCoreCount: 8,
     vendor: "GenuineIntel",
   },
+  glazewm: {
+    displayedWorkspace: { name: "2", displayName: "2", hasFocus: false, isDisplayed: true },
+    focusedWorkspace: { name: "1", displayName: "1", hasFocus: true, isDisplayed: false },
+    currentWorkspaces: [
+      { name: "1", displayName: "1", hasFocus: true, isDisplayed: false },
+      { name: "2", displayName: "2", hasFocus: false, isDisplayed: true },
+      { name: "3", displayName: "3", hasFocus: false, isDisplayed: false },
+      { name: "4", displayName: "4", hasFocus: false, isDisplayed: false },
+      { name: "5", displayName: "5", hasFocus: false, isDisplayed: false },
+      { name: "6", displayName: "6", hasFocus: false, isDisplayed: false },
+      { name: "7", displayName: "7", hasFocus: false, isDisplayed: false },
+      { name: "8", displayName: "8", hasFocus: false, isDisplayed: false },
+      { name: "9", displayName: "9", hasFocus: false, isDisplayed: false },
+      { name: "10", displayName: "10", hasFocus: false, isDisplayed: false },
+      { name: "11", displayName: "11", hasFocus: false, isDisplayed: false },
+      { name: "12", displayName: "12", hasFocus: false, isDisplayed: false },
+    ],
+    allWorkspaces: [],
+    allMonitors: [],
+    allWindows: [],
+    focusedMonitor: {},
+    currentMonitor: {},
+    focusedContainer: {},
+    tilingDirection: "horizontal",
+    bindingModes: [],
+    isPaused: false,
+    runCommand: async () => ({}),
+  } as unknown as GlazeWmOutput,
   memory: {
     usage: 54,
     freeMemory: 16_000_000_000,
