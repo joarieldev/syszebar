@@ -36,7 +36,7 @@ export const Glazewm = (props: Props) => {
     <div class="flex items-center">
       {showLeft() && (
         <button
-          class="cursor-pointer text-gray-400 hover:text-white"
+          class="cursor-pointer text-muted hover:text-content"
           onClick={() => ref?.scrollBy({ left: -80 })}
         >
           ⏴
@@ -50,10 +50,10 @@ export const Glazewm = (props: Props) => {
       >
         {props.glazewm?.currentWorkspaces.map((ws) => (
           <button
-            class={`px-1.5 rounded text-sm cursor-pointer text-gray-400 border border-transparent
-              ${ws.hasFocus ? "bg-white/20 text-white" : ""}
-              ${ws.isDisplayed && !ws.hasFocus ? "border border-white/30" : ""}
-              hover:border hover:border-white/30
+            class={`px-1.5 rounded text-sm cursor-pointer border border-transparent
+              ${ws.hasFocus ? "bg-ws-surface text-content" : "text-muted"}
+              ${ws.isDisplayed && !ws.hasFocus ? "border border-ws-line" : ""}
+              hover:border hover:border-ws-line
             `}
             onClick={() =>
               props.glazewm?.runCommand(`focus --workspace ${ws.name}`)
@@ -65,7 +65,7 @@ export const Glazewm = (props: Props) => {
       </div>
       {showRight() && (
         <button
-          class="cursor-pointer text-gray-400 hover:text-white"
+          class="cursor-pointer text-muted hover:text-content"
           onClick={() => ref?.scrollBy({ left: 80 })}
         >
           ⏵

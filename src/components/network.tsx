@@ -16,7 +16,7 @@ const formatTraffic = (ds: { siValue: number; siUnit: string }) => {
 export const Network = (props: Props) => {
   return (
     <div class="flex items-center justify-center gap-0.5 px-2">
-      <span class="flex justify-center text-zinc-400">
+      <span class="flex justify-center text-icon">
         <NetworkIcon class="size-4" />
       </span>
       <div class="flex font-mono tabular-nums text-center">

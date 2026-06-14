@@ -7,7 +7,7 @@ interface Props {
 
 export const Cpu = (props: Props) => (
   <div class="flex items-center justify-center gap-0.5 px-2">
-    <span class="flex justify-center text-zinc-400">
+    <span class="flex justify-center text-icon">
       <CpuIcon class="size-4" />
     </span>
     <span class="font-mono tabular-nums w-10 text-center">

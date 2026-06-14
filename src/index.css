@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+@theme {
+  --color-surface: oklch(0% 0 0 / 0.6);
+  --color-content: oklch(100% 0 0);
+  --color-icon: oklch(80% 0 0);
+  --color-line: oklch(80% 0 0 / 0.75);
+  --color-muted: oklch(75% 0 0);
+
+  --color-ws-surface: oklch(100% 0 0 / 0.4);
+  --color-ws-line: oklch(100% 0 0 / 0.5);
+}
+
+[data-theme="light"] {
+  --color-surface: oklch(100% 0 0 / 0.6);
+  --color-content: oklch(0% 0 0);
+  --color-icon: oklch(40% 0 0);
+  --color-line: oklch(20% 0 0 / 0.75);
+  --color-muted: oklch(45% 0 0);
+
+  --color-ws-surface: oklch(0% 0 0 / 0.2);
+  --color-ws-line: oklch(0% 0 0 / 0.4);
+}
+
 body {
   height: 100%;
   width: 100%;

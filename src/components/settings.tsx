@@ -1,5 +1,6 @@
 import { createSignal, Show, onCleanup, onMount } from "solid-js";
 import { expandWindow, collapseWindow } from "../util/window";
+import { theme, toggleTheme } from "../util/theme";
 import { DotsVertical } from "../icons/dots-vertical";
 
 const PANEL_WIDTH = 288;
@@ -42,7 +43,7 @@ export function Settings() {
     <div ref={wrapperRef} class="flex justify-center items-center px-2">
       <button
         onClick={toggle}
-        class="flex justify-center text-zinc-400 hover:text-white cursor-pointer"
+        class="flex justify-center text-icon hover:text-content cursor-pointer"
       >
         <DotsVertical class="size-4" />
       </button>
@@ -50,13 +51,21 @@ export function Settings() {
       <Show when={opened()}>
         <div
           style={{ width: `${PANEL_WIDTH}px`, height: `${PANEL_HEIGHT}px` }}
-          class="absolute right-0 top-full mt-2.5 rounded-lg border border-gray-300/75 bg-black/75 text-white shadow-lg p-4 z-50 overflow-y-auto"
+          class="absolute right-0 top-full mt-2.5 rounded-lg border border-line bg-surface text-content shadow-lg p-4 z-50 overflow-y-auto"
         >
-          <span class="block mb-3 border-b border-gray-300/50 pb-2 text-sm font-semibold text-gray-400">
+          <span class="block mb-3 border-b border-line/50 pb-2 text-sm font-semibold text-muted">
             Settings
           </span>
           <div class="space-y-2 text-sm">
-            <p>Theme: Dark mode</p>
+            <div class="flex justify-between items-center">
+              <span>Theme</span>
+              <button
+                onClick={toggleTheme}
+                class="text-muted hover:text-content transition-colors cursor-pointer"
+              >
+                {theme.mode === "dark" ? "Dark" : "Light"}
+              </button>
+            </div>
             <p>Refresh interval: 2s</p>
             <p>Opacity: 75%</p>
           </div>

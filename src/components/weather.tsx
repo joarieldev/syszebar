@@ -36,7 +36,7 @@ const getWeatherIcon = (status: WeatherStatus) => {
 export const Weather = (props: Props) => {
   return (
     <div class="flex items-center justify-center gap-0.5 px-2">
-      <span class="flex justify-center text-zinc-400">
+      <span class="flex justify-center text-icon">
         {props.weather && getWeatherIcon(props.weather.status)}
       </span>
       <span class="font-mono tabular-nums w-10 text-center">
