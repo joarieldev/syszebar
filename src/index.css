@@ -1,25 +1,37 @@
 @import "tailwindcss";
 
 @theme {
-  --color-surface: oklch(0% 0 0 / 0.6);
+  --surface-alpha: 0.6;
+  --line-alpha: 0.75;
+  --ws-surface-alpha: 0.4;
+  --ws-line-alpha: 0.5;
+
+  --color-surface: oklch(0% 0 0 / var(--surface-alpha));
   --color-content: oklch(100% 0 0);
   --color-icon: oklch(80% 0 0);
-  --color-line: oklch(80% 0 0 / 0.75);
+  --color-line: oklch(80% 0 0 / var(--line-alpha));
   --color-muted: oklch(75% 0 0);
 
-  --color-ws-surface: oklch(100% 0 0 / 0.4);
-  --color-ws-line: oklch(100% 0 0 / 0.5);
+  --color-ws-surface: oklch(100% 0 0 / var(--ws-surface-alpha));
+  --color-ws-line: oklch(100% 0 0 / var(--ws-line-alpha));
 }
 
 [data-theme="light"] {
-  --color-surface: oklch(100% 0 0 / 0.6);
+  --color-surface: oklch(100% 0 0 / var(--surface-alpha));
   --color-content: oklch(0% 0 0);
   --color-icon: oklch(40% 0 0);
-  --color-line: oklch(20% 0 0 / 0.75);
+  --color-line: oklch(20% 0 0 / var(--line-alpha));
   --color-muted: oklch(45% 0 0);
 
-  --color-ws-surface: oklch(0% 0 0 / 0.2);
-  --color-ws-line: oklch(0% 0 0 / 0.4);
+  --color-ws-surface: oklch(0% 0 0 / var(--ws-surface-alpha));
+  --color-ws-line: oklch(0% 0 0 / var(--ws-line-alpha));
+}
+
+[data-transparent="false"] {
+  --surface-alpha: 1;
+  --line-alpha: 1;
+  /* --ws-surface-alpha: 1;
+  --ws-line-alpha: 1; */
 }
 
 body {

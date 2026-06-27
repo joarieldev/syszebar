@@ -1,6 +1,6 @@
 import { createSignal, Show, onCleanup, onMount } from "solid-js";
 import { expandWindow, collapseWindow } from "../util/window";
-import { theme, toggleTheme } from "../util/theme";
+import { theme, toggleTheme, toggleTransparent } from "../util/theme";
 import { DotsVertical } from "../icons/dots-vertical";
 
 const PANEL_WIDTH = 288;
@@ -66,8 +66,19 @@ export function Settings() {
                 {theme.mode === "dark" ? "Dark" : "Light"}
               </button>
             </div>
-            <p>Refresh interval: 2s</p>
-            <p>Opacity: 75%</p>
+            <div class="flex justify-between items-center">
+              <span>Transparent</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={theme.transparent}
+                  onChange={toggleTransparent}
+                  class="sr-only peer"
+                />
+                <div class="w-9 h-5 bg-muted rounded-full peer peer-checked:bg-content transition-colors" />
+                <div class="absolute left-0.5 top-0.5 size-4 bg-surface rounded-full peer-checked:translate-x-4 transition-transform" />
+              </label>
+            </div>
           </div>
         </div>
       </Show>
