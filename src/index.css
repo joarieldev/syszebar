@@ -30,8 +30,6 @@
 [data-transparent="false"] {
   --surface-alpha: 1;
   --line-alpha: 1;
-  /* --ws-surface-alpha: 1;
-  --ws-line-alpha: 1; */
 }
 
 body {

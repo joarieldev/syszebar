@@ -1,10 +1,10 @@
 import { createSignal, Show, onCleanup, onMount } from "solid-js";
 import { expandWindow, collapseWindow } from "../util/window";
-import { theme, toggleTheme, toggleTransparent } from "../util/theme";
+import { theme, toggleTheme, toggleTransparent, setAlpha } from "../util/theme";
 import { DotsVertical } from "../icons/dots-vertical";
 
 const PANEL_WIDTH = 288;
-const PANEL_HEIGHT = 200;
+const PANEL_HEIGHT = 250;
 
 export function Settings() {
   const [opened, setOpened] = createSignal(false);
@@ -78,6 +78,18 @@ export function Settings() {
                 <div class="w-9 h-5 bg-muted rounded-full peer peer-checked:bg-content transition-colors" />
                 <div class="absolute left-0.5 top-0.5 size-4 bg-surface rounded-full peer-checked:translate-x-4 transition-transform" />
               </label>
+            </div>
+            <div class={`flex items-center justify-center ${!theme.transparent && "opacity-50 pointer-events-none"}`}>
+              <input
+                type="range"
+                min="0.00"
+                max="1"
+                step="0.01"
+                value={theme.alpha}
+                onInput={(e) => setAlpha(Number(e.currentTarget.value))}
+                class="w-full h-1.5 bg-muted rounded-full appearance-none cursor-pointer accent-surface"
+              />
+              <span class="text-muted w-12 text-end">{Math.round(theme.alpha * 100)}%</span>
             </div>
           </div>
         </div>

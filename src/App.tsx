@@ -5,8 +5,15 @@ import { ProdMode } from "./components/mode/prod-mode";
 
 const App = () => {
   createEffect(() => {
-    document.documentElement.dataset.theme = theme.mode;
-    document.documentElement.dataset.transparent = String(theme.transparent);
+    const root = document.documentElement;
+    root.dataset.theme = theme.mode;
+    root.dataset.transparent = String(theme.transparent);
+
+    if (theme.transparent) {
+      root.style.setProperty("--surface-alpha", String(theme.alpha));
+    } else {
+      root.style.removeProperty("--surface-alpha");
+    }
   });
 
   return (
