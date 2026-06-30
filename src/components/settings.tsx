@@ -1,6 +1,12 @@
 import { createSignal, Show, onCleanup, onMount } from "solid-js";
 import { expandWindow, collapseWindow } from "../util/window";
-import { theme, toggleTheme, toggleTransparent, setAlpha } from "../util/theme";
+import {
+  theme,
+  setMode,
+  toggleTransparent,
+  setAlpha,
+  setCustomColor,
+} from "../util/theme";
 import { DotsVertical } from "../icons/dots-vertical";
 
 const PANEL_WIDTH = 288;
@@ -56,30 +62,45 @@ export function Settings() {
           <span class="block mb-3 border-b border-line/50 pb-2 text-sm font-semibold text-muted">
             Settings
           </span>
-          <div class="space-y-2 text-sm">
-            <div class="flex justify-between items-center">
+          <div class="space-y-3 text-sm">
+            <div class="flex">
               <span>Theme</span>
-              <button
-                onClick={toggleTheme}
-                class="text-muted hover:text-content transition-colors cursor-pointer"
-              >
-                {theme.mode === "dark" ? "Dark" : "Light"}
-              </button>
             </div>
+
+            <div class="flex gap-3">
+              {(["dark", "light", "custom"] as const).map((m) => (
+                <label class="flex items-center gap-1 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="theme-mode"
+                    checked={theme.mode === m}
+                    onChange={() => setMode(m)}
+                    class="accent-line size-3.5"
+                  />
+                  <span class="capitalize text-xs">{m}</span>
+                </label>
+              ))}
+              <input
+                type="color"
+                value={theme.customColor}
+                onInput={(e) => setCustomColor(e.currentTarget.value)}
+                class={`size-5 p-0 border-none cursor-pointer bg-transparent ml-0.5 ${theme.mode !== "custom" ? "opacity-25 pointer-events-none" : ""}`}
+              />
+            </div>
+
             <div class="flex justify-between items-center">
               <span>Transparent</span>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={theme.transparent}
-                  onChange={toggleTransparent}
-                  class="sr-only peer"
-                />
-                <div class="w-9 h-5 bg-muted rounded-full peer peer-checked:bg-content transition-colors" />
-                <div class="absolute left-0.5 top-0.5 size-4 bg-surface rounded-full peer-checked:translate-x-4 transition-transform" />
-              </label>
+              <input
+                type="checkbox"
+                checked={theme.transparent}
+                onChange={toggleTransparent}
+                class="accent-line size-3.5 cursor-pointer"
+              />
             </div>
-            <div class={`flex items-center justify-center ${!theme.transparent && "opacity-50 pointer-events-none"}`}>
+
+            <div
+              class={`flex items-center justify-center ${!theme.transparent ? "opacity-25 pointer-events-none" : ""}`}
+            >
               <input
                 type="range"
                 min="0.00"
@@ -87,9 +108,11 @@ export function Settings() {
                 step="0.01"
                 value={theme.alpha}
                 onInput={(e) => setAlpha(Number(e.currentTarget.value))}
-                class="w-full h-1.5 bg-muted rounded-full appearance-none cursor-pointer accent-surface"
+                class="w-full h-1.5 bg-muted rounded-full appearance-none cursor-pointer accent-line"
               />
-              <span class="text-muted w-12 text-end">{Math.round(theme.alpha * 100)}%</span>
+              <span class="text-content w-12 text-end">
+                {Math.round(theme.alpha * 100)}%
+              </span>
             </div>
           </div>
         </div>
