@@ -1,10 +1,14 @@
 import { createStore } from "solid-js/store";
 import { oklch, parse } from "culori";
+import { type ModuleId, ALL_ENABLED } from "./modules";
+
+export type { ModuleId } from "./modules";
 
 const THEME_KEY = "syszebar-theme";
 const TRANSPARENT_KEY = "syszebar-transparent";
 const ALPHA_KEY = "syszebar-alpha";
 const CUSTOM_COLOR_KEY = "syszebar-custom-color";
+const MODULES_KEY = "syszebar-modules";
 
 const storedTheme = localStorage.getItem(THEME_KEY);
 const initialMode: "dark" | "light" | "custom" =
@@ -20,16 +24,29 @@ const initialAlpha = Number(storedAlpha) || 0.6;
 
 const storedCustomColor = localStorage.getItem(CUSTOM_COLOR_KEY) || "#5622a5";
 
+function loadModules(): Record<ModuleId, boolean> {
+  const stored = localStorage.getItem(MODULES_KEY);
+  if (!stored) return { ...ALL_ENABLED };
+  try {
+    const parsed = JSON.parse(stored);
+    return { ...ALL_ENABLED, ...parsed };
+  } catch {
+    return { ...ALL_ENABLED };
+  }
+}
+
 export const [theme, setTheme] = createStore<{
   mode: "dark" | "light" | "custom";
   transparent: boolean;
   alpha: number;
   customColor: string;
+  enabledModules: Record<ModuleId, boolean>;
 }>({
   mode: initialMode,
   transparent: initialTransparent,
   alpha: initialAlpha,
   customColor: storedCustomColor,
+  enabledModules: loadModules(),
 });
 
 export function setMode(mode: "dark" | "light" | "custom") {
@@ -51,6 +68,12 @@ export function setAlpha(value: number) {
 export function setCustomColor(hex: string) {
   setTheme("customColor", hex);
   localStorage.setItem(CUSTOM_COLOR_KEY, hex);
+}
+
+export function toggleModule(id: ModuleId) {
+  const next = !theme.enabledModules[id];
+  setTheme("enabledModules", id, next);
+  localStorage.setItem(MODULES_KEY, JSON.stringify({ ...theme.enabledModules, [id]: next }));
 }
 
 export function hexToOklch(hex: string) {
@@ -113,6 +136,12 @@ export function startStorageSync() {
     }
     if (e.key === CUSTOM_COLOR_KEY && typeof e.newValue === "string") {
       setTheme("customColor", e.newValue);
+    }
+    if (e.key === MODULES_KEY && typeof e.newValue === "string") {
+      try {
+        const parsed = JSON.parse(e.newValue);
+        setTheme("enabledModules", { ...ALL_ENABLED, ...parsed });
+      } catch { /* ignore malformed */ }
     }
   };
   window.addEventListener("storage", handler);

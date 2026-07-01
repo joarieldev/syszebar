@@ -6,11 +6,13 @@ import {
   toggleTransparent,
   setAlpha,
   setCustomColor,
+  toggleModule,
 } from "../util/theme";
+import { MODULES } from "../util/modules";
 import { DotsVertical } from "../icons/dots-vertical";
 
 const PANEL_WIDTH = 288;
-const PANEL_HEIGHT = 250;
+const PANEL_HEIGHT = 410;
 
 export function Settings() {
   const [opened, setOpened] = createSignal(false);
@@ -113,6 +115,24 @@ export function Settings() {
               <span class="text-content w-12 text-end">
                 {Math.round(theme.alpha * 100)}%
               </span>
+            </div>
+
+            <span class="block mb-3 border-b border-line/50 pb-2 text-sm font-semibold text-muted">
+              Modules
+            </span>
+
+            <div class="space-y-1.5">
+              {MODULES.map((mod) => (
+                <div class="flex justify-between items-center text-xs">
+                  <span>{mod.label}</span>
+                  <input
+                    type="checkbox"
+                    checked={theme.enabledModules[mod.id]}
+                    onChange={() => toggleModule(mod.id)}
+                    class="accent-line size-3.5 cursor-pointer"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
