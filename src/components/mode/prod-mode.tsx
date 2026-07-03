@@ -1,48 +1,60 @@
-import { createEffect, on } from "solid-js";
+import { createEffect, on, onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 import { Bar } from "../bar";
 import { createProviderGroup } from "zebar";
-import { theme } from "../../util/theme";
-import { PROVIDERS_CONFIG, PROVIDER_IDS, type ProviderId } from "../../util/modules";
+import {
+  PROVIDERS_CONFIG,
+  PROVIDER_IDS,
+  type ProviderId,
+} from "../../util/providers";
+import { module } from "../../util/modules";
 
 const providers = createProviderGroup(PROVIDERS_CONFIG);
-
 type OutputMap = typeof providers.outputMap;
 
 export const ProdMode = () => {
   const [output, setOutput] = createStore<OutputMap>(providers.outputMap);
 
-  function subscribe(id: ProviderId) {
-    (providers.raw[id] as any).onOutput((output: any) => setOutput(id as any, output));
-  }
-
-  for (const id of PROVIDER_IDS) {
-    subscribe(id);
-  }
-
-  for (const id of PROVIDER_IDS) {
-    if (theme.enabledModules[id]) {
-      providers.raw[id].restart().catch(() => {});
+  function handleProviders(id: ProviderId, enabled: boolean) {
+    if (enabled) {
+      providers.raw[id]
+        .restart()
+        .then(() => {
+          (providers.raw[id] as any).onOutput((out: any) =>
+            setOutput(id as any, out),
+          );
+        })
+        .catch((err: unknown) =>
+          console.warn(`[providers] can't start "${id}"`, err),
+        );
     } else {
+      providers.raw[id]
+        .stop()
+        .catch((err: unknown) =>
+          console.warn(`[providers] can't stop "${id}"`, err),
+        );
       setOutput(id, null as OutputMap[typeof id]);
-      providers.raw[id].stop().catch(() => {});
     }
   }
 
+  onMount(() => {
+    for (const id of PROVIDER_IDS) {
+      (providers.raw[id] as any).onOutput((out: any) =>
+        setOutput(id as any, out),
+      );
+
+      handleProviders(id, module[id]);
+    }
+  });
+
   for (const id of PROVIDER_IDS) {
-    createEffect(on(
-      () => theme.enabledModules[id],
-      (enabled) => {
-        if (enabled) {
-          providers.raw[id].restart().catch(() => {});
-          subscribe(id);
-        } else {
-          setOutput(id, null as OutputMap[typeof id]);
-          providers.raw[id].stop().catch(() => {});
-        }
-      },
-      { defer: true },
-    ));
+    createEffect(
+      on(
+        () => module[id],
+        (enabled) => handleProviders(id, enabled),
+        { defer: true },
+      ),
+    );
   }
 
   return <Bar provider={output} />;

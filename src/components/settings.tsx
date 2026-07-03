@@ -6,10 +6,10 @@ import {
   toggleTransparent,
   setAlpha,
   setCustomColor,
-  toggleModule,
 } from "../util/theme";
-import { MODULES } from "../util/modules";
+import { MODULES } from "../util/providers";
 import { DotsVertical } from "../icons/dots-vertical";
+import { module, toggleModule } from "../util/modules";
 
 const PANEL_WIDTH = 288;
 const PANEL_HEIGHT = 410;
@@ -127,7 +127,7 @@ export function Settings() {
                   <span>{mod.label}</span>
                   <input
                     type="checkbox"
-                    checked={theme.enabledModules[mod.id]}
+                    checked={module[mod.id]}
                     onChange={() => toggleModule(mod.id)}
                     class="accent-line size-3.5 cursor-pointer"
                   />
