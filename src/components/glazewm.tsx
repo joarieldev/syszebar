@@ -50,7 +50,7 @@ export const Glazewm = (props: Props) => {
       >
         {props.glazewm?.currentWorkspaces.map((ws) => (
           <button
-            class={`px-1.5 rounded text-sm cursor-pointer border border-transparent
+            class={`px-1.5 rounded cursor-pointer border border-transparent
               ${ws.hasFocus ? "bg-ws-surface text-content" : "text-muted"}
               ${ws.isDisplayed && !ws.hasFocus ? "border border-ws-line" : ""}
               hover:border hover:border-ws-line

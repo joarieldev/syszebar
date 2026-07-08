@@ -10,7 +10,7 @@ export const Memory = (props: Props) => (
     <span class="flex justify-center text-icon">
       <DeviceSim class="size-4" />
     </span>
-    <span class="font-mono tabular-nums w-10 text-center">
+    <span class="tabular-nums w-10 text-center">
       {props.memory ? `${Math.round(props.memory.usage)}%` : "---"}
     </span>
   </div>

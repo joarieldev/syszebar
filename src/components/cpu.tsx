@@ -10,7 +10,7 @@ export const Cpu = (props: Props) => (
     <span class="flex justify-center text-icon">
       <CpuIcon class="size-4" />
     </span>
-    <span class="font-mono tabular-nums w-10 text-center">
+    <span class="tabular-nums w-10 text-center">
       {props.cpu ? `${Math.round(props.cpu.usage)}%` : "---"}
     </span>
   </div>

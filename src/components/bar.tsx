@@ -16,7 +16,7 @@ interface Props {
 
 export const Bar = (props: Props) => {
   return (
-    <main class="grid grid-cols-[1fr_1fr_1fr] h-7.5 items-center bg-surface px-[1vw] text-content text-base border border-line rounded-lg mx-2.5 relative">
+    <main class="grid grid-cols-[1fr_1fr_1fr] h-7.5 items-center bg-surface px-[1vw] text-content border border-line rounded-lg mx-2.5 relative">
       <div class="flex justify-start">
         <Show when={module.glazewm}>
           <Glazewm glazewm={props.provider.glazewm} />

@@ -19,7 +19,7 @@ export const Network = (props: Props) => {
       <span class="flex justify-center text-icon">
         <NetworkIcon class="size-4" />
       </span>
-      <div class="flex font-mono tabular-nums text-center">
+      <div class="flex tabular-nums text-center">
         <span class="w-20">
           {props.network?.traffic
             ? `↓${formatTraffic(props.network.traffic.received)}`

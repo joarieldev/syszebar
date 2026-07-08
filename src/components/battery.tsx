@@ -10,7 +10,7 @@ export const Battery = (props: Props) => (
     <span class="flex justify-center text-icon">
       <Battery4 class="size-4" />
     </span>
-    <span class="font-mono tabular-nums w-10 text-center">
+    <span class="tabular-nums w-10 text-center">
       {props.battery
         ? `${props.battery.isCharging ? "+" : ""}${Math.round(props.battery.chargePercent)}%`
         : "---"}

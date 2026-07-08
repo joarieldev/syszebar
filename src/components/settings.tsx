@@ -10,13 +10,24 @@ import {
 import { MODULES } from "../util/providers";
 import { DotsVertical } from "../icons/dots-vertical";
 import { module, toggleModule } from "../util/modules";
+import {
+  typography,
+  setFontSize,
+  setFontFamily,
+  setTextColor,
+  resetTextColor,
+  FALLBACK_FONTS,
+} from "../util/typography";
 
 const PANEL_WIDTH = 288;
-const PANEL_HEIGHT = 410;
+const PANEL_HEIGHT = 480;
 
 export function Settings() {
   const [opened, setOpened] = createSignal(false);
+  const [fontOpen, setFontOpen] = createSignal(false);
   let wrapperRef: HTMLDivElement | undefined;
+  let fontMenuRef: HTMLDivElement | undefined;
+  let fontTriggerRef: HTMLInputElement | undefined;
 
   async function close() {
     await collapseWindow();
@@ -38,14 +49,37 @@ export function Settings() {
     }
   }
 
-  onMount(() => {
+  function onFontClickOutside(e: MouseEvent) {
+    if (
+      fontOpen() &&
+      fontMenuRef &&
+      fontTriggerRef &&
+      !fontMenuRef.contains(e.target as Node) &&
+      !fontTriggerRef.contains(e.target as Node)
+    ) {
+      setFontOpen(false);
+    }
+  }
+
+  onMount(async () => {
     document.addEventListener("mousedown", onClickOutside);
+    document.addEventListener("mousedown", onFontClickOutside);
     window.addEventListener("blur", close);
     onCleanup(() => {
       document.removeEventListener("mousedown", onClickOutside);
+      document.removeEventListener("mousedown", onFontClickOutside);
       window.removeEventListener("blur", close);
     });
   });
+
+  function selectFont(family: string) {
+    setFontFamily(family);
+    setFontOpen(false);
+  }
+
+  function handleCustomFontInput(e: Event) {
+    setFontFamily((e.target as HTMLInputElement).value);
+  }
 
   return (
     <div ref={wrapperRef} class="flex justify-center items-center px-2">
@@ -61,36 +95,38 @@ export function Settings() {
           style={{ width: `${PANEL_WIDTH}px`, height: `${PANEL_HEIGHT}px` }}
           class="absolute right-0 top-full mt-2.5 rounded-lg border border-line bg-surface text-content shadow-lg p-4 z-50 overflow-y-auto"
         >
-          <span class="block mb-3 border-b border-line/50 pb-2 text-sm font-semibold text-muted">
+          <span class="block mb-2 border-b border-line/50 pb-2 text-sm font-semibold text-muted text-center">
             Settings
           </span>
-          <div class="space-y-3 text-sm">
-            <div class="flex">
+          
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between items-center gap-4">
               <span>Theme</span>
+              <div class="flex gap-2">
+                {(["dark", "light", "custom"] as const).map((m) => (
+                  <label class="flex items-center gap-1">
+                    <input
+                      type="radio"
+                      name="theme-mode"
+                      checked={theme.mode === m}
+                      onChange={() => setMode(m)}
+                      class="accent-line size-3.5"
+                    />
+                    <span class="capitalize cursor-pointer">{m}</span>
+                    {m === "custom" && (
+                      <input
+                        type="color"
+                        value={theme.customColor}
+                        onInput={(e) => setCustomColor(e.currentTarget.value)}
+                        class={`size-5 p-0 border-none bg-transparent ${theme.mode !== "custom" ? "pointer-events-none cursor-default" : "cursor-pointer"}`}
+                      />
+                    )}
+                  </label>
+                ))}
+              </div>
             </div>
 
-            <div class="flex gap-3">
-              {(["dark", "light", "custom"] as const).map((m) => (
-                <label class="flex items-center gap-1 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="theme-mode"
-                    checked={theme.mode === m}
-                    onChange={() => setMode(m)}
-                    class="accent-line size-3.5"
-                  />
-                  <span class="capitalize text-xs">{m}</span>
-                </label>
-              ))}
-              <input
-                type="color"
-                value={theme.customColor}
-                onInput={(e) => setCustomColor(e.currentTarget.value)}
-                class={`size-5 p-0 border-none cursor-pointer bg-transparent ml-0.5 ${theme.mode !== "custom" ? "opacity-25 pointer-events-none" : ""}`}
-              />
-            </div>
-
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center gap-4">
               <span>Transparent</span>
               <input
                 type="checkbox"
@@ -101,7 +137,7 @@ export function Settings() {
             </div>
 
             <div
-              class={`flex items-center justify-center ${!theme.transparent ? "opacity-25 pointer-events-none" : ""}`}
+              class={`flex items-center justify-center gap-1 ${!theme.transparent ? "opacity-25 pointer-events-none" : ""}`}
             >
               <input
                 type="range"
@@ -110,30 +146,103 @@ export function Settings() {
                 step="0.01"
                 value={theme.alpha}
                 onInput={(e) => setAlpha(Number(e.currentTarget.value))}
-                class="w-full h-1.5 bg-muted rounded-full appearance-none cursor-pointer accent-line"
+                class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
               />
               <span class="text-content w-12 text-end">
                 {Math.round(theme.alpha * 100)}%
               </span>
             </div>
+          </div>
+          
+          <span class="block mb-2 border-b border-line/50 py-2 text-sm font-semibold text-muted text-center">
+            Typography
+          </span>
 
-            <span class="block mb-3 border-b border-line/50 pb-2 text-sm font-semibold text-muted">
-              Modules
-            </span>
-
-            <div class="space-y-1.5">
-              {MODULES.map((mod) => (
-                <div class="flex justify-between items-center text-xs">
-                  <span>{mod.label}</span>
-                  <input
-                    type="checkbox"
-                    checked={module[mod.id]}
-                    onChange={() => toggleModule(mod.id)}
-                    class="accent-line size-3.5 cursor-pointer"
-                  />
-                </div>
-              ))}
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between items-center gap-4">
+              <span>Font family</span>
+              <div class="flex relative max-w-36">
+                <input
+                  type="text"
+                  ref={fontTriggerRef}
+                  onClick={() => setFontOpen(!fontOpen())}
+                  value={typography.fontFamily}
+                  onInput={handleCustomFontInput}
+                  placeholder="e.g. Inter, sans-serif"
+                  class="w-full text-right bg-transparent outline-none focus:ring-1 focus:ring-line border border-line rounded px-1 py-0.5"
+                />
+                <Show when={fontOpen()}>
+                  <div
+                    ref={fontMenuRef}
+                    class="absolute left-0 right-0 top-full mt-1 z-60 bg-surface border border-line rounded shadow-lg max-h-36 overflow-y-auto backdrop-blur"
+                  >
+                    {FALLBACK_FONTS.map((f) => (
+                      <button
+                        onClick={() => selectFont(f.family)}
+                        class={`w-full text-right px-1 py-0.5 text-xs cursor-pointer hover:bg-line truncate ${typography.fontFamily === f.family ? "underline underline-offset-2" : ""}`}
+                        style={{ "font-family": f.family }}
+                      >
+                        {f.family}
+                      </button>
+                    ))}
+                  </div>
+                </Show>
+              </div>
             </div>
+
+            <div class="flex justify-between items-center">
+              <span>Font size</span>
+              <div class="flex items-center gap-1">
+                <input
+                  type="number"
+                  min={8}
+                  max={32}
+                  step={1}
+                  value={typography.fontSize}
+                  onInput={(e) =>
+                    setFontSize(Number(e.currentTarget.value))
+                  }
+                  class="w-12 text-right bg-transparent outline-none focus:ring-1 focus:ring-line border border-line rounded px-1 py-0.5"
+                />
+                <span class="text-content">px</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span>Text color</span>
+              <div class="flex items-center gap-1">
+                <input
+                  type="color"
+                  value={typography.textColor || "#ffffff"}
+                  onInput={(e) => setTextColor(e.currentTarget.value)}
+                  class="size-5 p-0 border-none cursor-pointer bg-transparent"
+                />
+                <button
+                  onClick={resetTextColor}
+                  class="text-muted hover:text-content cursor-pointer"
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <span class="block mb-2 border-b border-line/50 py-2 text-sm font-semibold text-muted text-center">
+            Modules
+          </span>
+
+          <div class="space-y-2 text-xs">
+            {MODULES.map((mod) => (
+              <div class="flex justify-between items-center gap-4">
+                <span>{mod.label}</span>
+                <input
+                  type="checkbox"
+                  checked={module[mod.id]}
+                  onChange={() => toggleModule(mod.id)}
+                  class="accent-line size-3.5 cursor-pointer"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </Show>

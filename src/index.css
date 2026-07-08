@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "util/fonts.css";
 
 @theme {
   --surface-alpha: 0.6;
@@ -53,8 +54,17 @@
   --line-alpha: 1;
 }
 
+:root {
+  --text-font-size: 14px;
+  --text-font-family: system-ui, sans-serif;
+}
+
 body {
   height: 100%;
   width: 100%;
   overflow: hidden;
+  font-size: var(--text-font-size);
+  font-family: var(--text-font-family);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
 }

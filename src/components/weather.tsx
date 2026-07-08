@@ -39,7 +39,7 @@ export const Weather = (props: Props) => {
       <span class="flex justify-center text-icon">
         {props.weather && getWeatherIcon(props.weather.status)}
       </span>
-      <span class="font-mono tabular-nums w-10 text-center">
+      <span class="tabular-nums w-10 text-center">
         {props.weather ? `${Math.round(props.weather.celsiusTemp)}°C` : "---"}
       </span>
     </div>
