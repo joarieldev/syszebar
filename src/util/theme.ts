@@ -81,7 +81,9 @@ export function applyTheme(state: typeof theme) {
 
 function applyCustomVars(root: HTMLElement, hex: string) {
   const parsed = hexToOklch(hex);
+
   if (!parsed) return;
+
   root.style.setProperty("--custom-surface-l", `${parsed.l * 100}%`);
   root.style.setProperty("--custom-surface-c", String(parsed.c));
   root.style.setProperty("--custom-surface-h", String(parsed.h ?? 0));
@@ -90,10 +92,19 @@ function applyCustomVars(root: HTMLElement, hex: string) {
   root.style.setProperty("--custom-line-l", `${lineL}%`);
   root.style.setProperty("--custom-line-c", String(parsed.c));
   root.style.setProperty("--custom-line-h", String(parsed.h ?? 0));
+
+  const isLight = parsed.l > 0.5;
+  const wsL = isLight ? 0 : 100;
+  root.style.setProperty("--custom-ws-surface-l", `${wsL}%`);
+  root.style.setProperty("--custom-ws-surface-c", String(parsed.c));
+  root.style.setProperty("--custom-ws-surface-h", String(parsed.h ?? 0));
+  root.style.setProperty("--custom-ws-line-l", `${wsL}%`);
+  root.style.setProperty("--custom-ws-line-c", String(parsed.c));
+  root.style.setProperty("--custom-ws-line-h", String(parsed.h ?? 0));
 }
 
 function clearCustomVars(root: HTMLElement) {
-  for (const key of ["surface", "line"] as const) {
+  for (const key of ["surface", "line", "ws-surface", "ws-line"] as const) {
     root.style.removeProperty(`--custom-${key}-l`);
     root.style.removeProperty(`--custom-${key}-c`);
     root.style.removeProperty(`--custom-${key}-h`);

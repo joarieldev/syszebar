@@ -85,7 +85,7 @@ export function Settings() {
     <div ref={wrapperRef} class="flex justify-center items-center px-2">
       <button
         onClick={toggle}
-        class="flex justify-center text-icon hover:text-content cursor-pointer"
+        class="flex justify-center text-icon cursor-pointer"
       >
         <DotsVertical class="size-4" />
       </button>

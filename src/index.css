@@ -2,11 +2,13 @@
 @import "util/fonts.css";
 
 @theme {
+  /* transparent */
   --surface-alpha: 0.6;
   --line-alpha: 0.75;
-  --ws-surface-alpha: 0.4;
+  --ws-surface-alpha: 0.25;
   --ws-line-alpha: 0.5;
 
+  /* dark */
   --color-surface-l: 0%;
   --color-surface-c: 0;
   --color-surface-h: 0;
@@ -14,14 +16,22 @@
   --color-line-c: 0;
   --color-line-h: 0;
 
+  --color-ws-surface-l: 100%;
+  --color-ws-surface-c: 0;
+  --color-ws-surface-h: 0;
+  --color-ws-line-l: 100%;
+  --color-ws-line-c: 0;
+  --color-ws-line-h: 0;
+
   --color-surface: oklch(var(--color-surface-l) var(--color-surface-c) var(--color-surface-h) / var(--surface-alpha));
+  --color-line: oklch(var(--color-line-l) var(--color-line-c) var(--color-line-h) / var(--line-alpha));
+  
+  --color-ws-surface: oklch(var(--color-ws-surface-l) var(--color-ws-surface-c) var(--color-ws-surface-h) / var(--ws-surface-alpha));
+  --color-ws-line: oklch(var(--color-ws-line-l) var(--color-ws-line-c) var(--color-ws-line-h) / var(--ws-line-alpha));
+  
   --color-content: oklch(100% 0 0);
   --color-icon: oklch(80% 0 0);
-  --color-line: oklch(var(--color-line-l) var(--color-line-c) var(--color-line-h) / var(--line-alpha));
   --color-muted: oklch(75% 0 0);
-
-  --color-ws-surface: oklch(100% 0 0 / var(--ws-surface-alpha));
-  --color-ws-line: oklch(100% 0 0 / var(--ws-line-alpha));
 }
 
 [data-theme="light"] {
@@ -32,12 +42,16 @@
   --color-line-c: 0;
   --color-line-h: 0;
 
+  --color-ws-surface-l: 0%;
+  --color-ws-surface-c: 0;
+  --color-ws-surface-h: 0;
+  --color-ws-line-l: 0%;
+  --color-ws-line-c: 0;
+  --color-ws-line-h: 0;
+
   --color-content: oklch(0% 0 0);
   --color-icon: oklch(40% 0 0);
   --color-muted: oklch(45% 0 0);
-
-  --color-ws-surface: oklch(0% 0 0 / var(--ws-surface-alpha));
-  --color-ws-line: oklch(0% 0 0 / var(--ws-line-alpha));
 }
 
 [data-theme="custom"] {
@@ -47,6 +61,13 @@
   --color-line-l: var(--custom-line-l, 80%);
   --color-line-c: var(--custom-line-c, 0);
   --color-line-h: var(--custom-line-h, 0);
+
+  --color-ws-surface-l: var(--custom-ws-surface-l, 100%);
+  --color-ws-surface-c: var(--custom-ws-surface-c, 0);
+  --color-ws-surface-h: var(--custom-ws-surface-h, 0);
+  --color-ws-line-l: var(--custom-ws-line-l, 100%);
+  --color-ws-line-c: var(--custom-ws-line-c, 0);
+  --color-ws-line-h: var(--custom-ws-line-h, 0);
 }
 
 [data-transparent="false"] {
