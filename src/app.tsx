@@ -4,6 +4,7 @@ import { typography, applyTypography, startStorageSyncTypography } from "./util/
 // import { DevMode } from "./components/mode/dev-mode";
 import { ProdMode } from "./components/mode/prod-mode";
 import { startStorageSyncModule } from "./util/modules";
+import { startStorageSyncBarStyle } from "./util/bar-style";
 
 const App = () => {
   createEffect(() => applyTheme(theme));
@@ -12,6 +13,7 @@ const App = () => {
   onCleanup(startStorageSyncTheme());
   onCleanup(startStorageSyncTypography());
   onCleanup(startStorageSyncModule());
+  onCleanup(startStorageSyncBarStyle());
 
   return (
     <>

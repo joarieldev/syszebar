@@ -95,16 +95,13 @@ function applyCustomVars(root: HTMLElement, hex: string) {
 
   const isLight = parsed.l > 0.5;
   const wsL = isLight ? 0 : 100;
-  root.style.setProperty("--custom-ws-surface-l", `${wsL}%`);
-  root.style.setProperty("--custom-ws-surface-c", String(parsed.c));
-  root.style.setProperty("--custom-ws-surface-h", String(parsed.h ?? 0));
   root.style.setProperty("--custom-ws-line-l", `${wsL}%`);
   root.style.setProperty("--custom-ws-line-c", String(parsed.c));
   root.style.setProperty("--custom-ws-line-h", String(parsed.h ?? 0));
 }
 
 function clearCustomVars(root: HTMLElement) {
-  for (const key of ["surface", "line", "ws-surface", "ws-line"] as const) {
+  for (const key of ["surface", "line", "ws-line"] as const) {
     root.style.removeProperty(`--custom-${key}-l`);
     root.style.removeProperty(`--custom-${key}-c`);
     root.style.removeProperty(`--custom-${key}-h`);

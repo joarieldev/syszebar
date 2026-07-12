@@ -9,14 +9,34 @@ import { Weather } from "./weather";
 import { Glazewm } from "./glazewm";
 import { Settings } from "./settings";
 import { module } from "../util/modules";
+import { barStyle } from "../util/bar-style";
+import type { BarStyle } from "../util/bar-style";
 
 interface Props {
   provider: IProviders;
 }
 
 export const Bar = (props: Props) => {
+  const barVariants: Record<BarStyle, string> = {
+    default: "h-7.5 bg-surface border border-line rounded-lg mx-2.5 mt-2.5",
+    full: "h-10 bg-surface",
+    modular: "mx-2.5 mt-2.5",
+  };
+
+  const ModuleBox = (props: { children: any }) => {
+    return (
+      <div classList={{
+        "flex items-center h-7.5 bg-surface border border-line rounded-lg": barStyle.value === "modular"
+      }}>
+        {props.children}
+      </div>
+    );
+  };
+
   return (
-    <main class="grid grid-cols-[1fr_1fr_1fr] h-7.5 items-center bg-surface px-[1vw] text-content border border-line rounded-lg mx-2.5 relative">
+    <main
+      class={`grid grid-cols-[1fr_1fr_1fr] items-center px-[1vw] text-content relative ${barVariants[barStyle.value]}`}
+    >
       <div class="flex justify-start">
         <Show when={module.glazewm}>
           <Glazewm glazewm={props.provider.glazewm} />
@@ -24,26 +44,40 @@ export const Bar = (props: Props) => {
       </div>
       <div class="flex justify-center">
         <Show when={module.clock}>
-          <Clock />
+          <ModuleBox>
+            <Clock />
+          </ModuleBox>
         </Show>
       </div>
       <div class="flex justify-end gap-4">
         <Show when={module.network}>
-          <Network network={props.provider.network} />
+          <ModuleBox>
+            <Network network={props.provider.network} />
+          </ModuleBox>
         </Show>
         <Show when={module.memory}>
-          <Memory memory={props.provider.memory} />
+          <ModuleBox>
+            <Memory memory={props.provider.memory} />
+          </ModuleBox>
         </Show>
         <Show when={module.cpu}>
-          <Cpu cpu={props.provider.cpu} />
+          <ModuleBox>
+            <Cpu cpu={props.provider.cpu} />
+          </ModuleBox>
         </Show>
         <Show when={module.battery}>
-          <Battery battery={props.provider.battery} />
+          <ModuleBox>
+            <Battery battery={props.provider.battery} />
+          </ModuleBox>
         </Show>
         <Show when={module.weather}>
-          <Weather weather={props.provider.weather} />
+          <ModuleBox>
+            <Weather weather={props.provider.weather} />
+          </ModuleBox>
         </Show>
-        <Settings />
+        <ModuleBox>
+          <Settings />
+        </ModuleBox>
       </div>
     </main>
   );

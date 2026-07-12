@@ -1,5 +1,6 @@
 import { createSignal, onCleanup, onMount } from "solid-js";
 import type { GlazeWmOutput } from "zebar";
+import { barStyle } from "../util/bar-style";
 
 interface Props {
   glazewm: GlazeWmOutput | null;
@@ -14,6 +15,18 @@ export const Glazewm = (props: Props) => {
     if (!ref) return;
     setShowLeft(ref.scrollLeft > 0);
     setShowRight(ref.scrollLeft + ref.clientWidth < ref.scrollWidth - 1);
+  };
+
+  const wsBtnClasses = (ws: { hasFocus: boolean; isDisplayed: boolean }) => {
+    const base = "px-1.5 cursor-pointer hover:text-content";
+    const text = ws.hasFocus || ws.isDisplayed ? "text-content" : "text-muted";
+
+    if (barStyle.value !== "modular")
+      return `${base} ${text}`;
+
+    const border = ws.hasFocus || ws.isDisplayed ? "border-ws-line" : "border-line";
+
+    return `${base} ${text} bg-surface border ${border} hover:border-ws-line rounded-lg h-7.5 px-2`;
   };
 
   onMount(() => {
@@ -33,7 +46,7 @@ export const Glazewm = (props: Props) => {
   });
 
   return (
-    <div class="flex items-center">
+    <div class="flex items-center max-w-65">
       {showLeft() && (
         <button
           class="cursor-pointer text-muted hover:text-content"
@@ -45,16 +58,12 @@ export const Glazewm = (props: Props) => {
       <div
         ref={ref}
         onScroll={checkScroll}
-        class="flex gap-1 overflow-x-auto max-w-65
+        class="flex gap-1 overflow-x-auto
       scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         {props.glazewm?.currentWorkspaces.map((ws) => (
           <button
-            class={`px-1.5 rounded cursor-pointer border border-transparent
-              ${ws.hasFocus ? "bg-ws-surface text-content" : "text-muted"}
-              ${ws.isDisplayed && !ws.hasFocus ? "border border-ws-line" : ""}
-              hover:border hover:border-ws-line
-            `}
+            class={wsBtnClasses(ws)}
             onClick={() =>
               props.glazewm?.runCommand(`focus --workspace ${ws.name}`)
             }

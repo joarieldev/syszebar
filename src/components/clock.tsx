@@ -10,6 +10,8 @@ const formatter = new Intl.DateTimeFormat("es-AR", {
 export const Clock = () => {
   const [time, setTime] = createSignal(formatter.format(new Date()));
   const timer = setInterval(() => setTime(formatter.format(new Date())), 1000);
+
   onCleanup(() => clearInterval(timer));
-  return <span class="tabular-nums">{time()}</span>;
+
+  return <span class="tabular-nums px-2">{time()}</span>;
 };
