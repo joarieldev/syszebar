@@ -19,10 +19,11 @@ import {
   FALLBACK_FONTS,
 } from "../util/typography";
 import { barStyle, setStyle } from "../util/bar-style";
+import { barMargin, setMargin, resetMargins } from "../util/bar-margin";
 import type { BarStyle } from "../util/bar-style";
 
 const PANEL_WIDTH = 340;
-const PANEL_HEIGHT = 450;
+const PANEL_HEIGHT = 505;
 
 export function Settings() {
   const [opened, setOpened] = createSignal(false);
@@ -87,7 +88,10 @@ export function Settings() {
     <div ref={wrapperRef} class="flex justify-center items-center">
       <button
         onClick={toggle}
-        class="flex justify-center text-icon cursor-pointer px-2"
+        classList={{
+          "flex justify-center text-icon cursor-pointer": true,
+          "px-2 py-1.5": barStyle.value === "modular",
+        }}
       >
         <DotsVertical class="size-4" />
       </button>
@@ -170,6 +174,43 @@ export function Settings() {
                         class="accent-line size-3.5"
                       />
                       <span class="capitalize cursor-pointer">{s}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div
+                class={`flex flex-col ${barStyle.value === "full" ? "opacity-25 pointer-events-none" : ""}`}
+              >
+                <div class="flex justify-between items-center mb-1">
+                  <span>Margins (px)</span>
+                  <button
+                    onClick={resetMargins}
+                    class="text-muted hover:text-content cursor-pointer"
+                  >
+                    Reset
+                  </button>
+                </div>
+                <div class="grid grid-cols-4 gap-1">
+                  {(["top", "right", "bottom", "left"] as const).map((side) => (
+                    <label class="flex flex-col items-center gap-0.5">
+                      <span class="text-[10px] uppercase text-muted">
+                        {side[0]}
+                      </span>
+                      <input
+                        type="number"
+                        min={0}
+                        max={32}
+                        step={1}
+                        value={barMargin[side]}
+                        onInput={(e) =>
+                          setMargin(
+                            side,
+                            Math.max(0, Number(e.currentTarget.value)),
+                          )
+                        }
+                        class="w-full text-center bg-transparent outline-none focus:ring-1 focus:ring-line border border-line rounded px-1 py-0.5"
+                      />
                     </label>
                   ))}
                 </div>

@@ -1,10 +1,15 @@
 import { createEffect, onCleanup } from "solid-js";
 import { theme, applyTheme, startStorageSyncTheme } from "./util/theme";
-import { typography, applyTypography, startStorageSyncTypography } from "./util/typography";
+import {
+  typography,
+  applyTypography,
+  startStorageSyncTypography,
+} from "./util/typography";
 // import { DevMode } from "./components/mode/dev-mode";
 import { ProdMode } from "./components/mode/prod-mode";
 import { startStorageSyncModule } from "./util/modules";
 import { startStorageSyncBarStyle } from "./util/bar-style";
+import { startStorageSyncBarMargin } from "./util/bar-margin";
 
 const App = () => {
   createEffect(() => applyTheme(theme));
@@ -14,6 +19,7 @@ const App = () => {
   onCleanup(startStorageSyncTypography());
   onCleanup(startStorageSyncModule());
   onCleanup(startStorageSyncBarStyle());
+  onCleanup(startStorageSyncBarMargin());
 
   return (
     <>
