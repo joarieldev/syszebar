@@ -13,5 +13,9 @@ export const Clock = () => {
 
   onCleanup(() => clearInterval(timer));
 
-  return <span class="tabular-nums px-2">{time()}</span>;
+  return (
+    <div class="flex items-center justify-center px-2">
+      <span class="tabular-nums">{time()}</span>
+    </div>
+  );
 };

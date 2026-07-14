@@ -18,15 +18,15 @@ export const Glazewm = (props: Props) => {
   };
 
   const wsBtnClasses = (ws: { hasFocus: boolean; isDisplayed: boolean }) => {
-    const base = "px-1.5 cursor-pointer hover:text-content";
+    const base = "px-1.5 flex items-center justify-center cursor-pointer hover:text-content";
     const text = ws.hasFocus || ws.isDisplayed ? "text-content" : "text-muted";
 
     if (barStyle.value !== "modular")
       return `${base} ${text}`;
 
-    const border = ws.hasFocus || ws.isDisplayed ? "border-ws-line" : "border-line";
+    const border = ws.hasFocus ? "border-ws-line" : "border-line";
 
-    return `${base} ${text} bg-surface border ${border} hover:border-ws-line rounded-lg h-7.5 px-2`;
+    return `${base} ${text} bg-surface border ${border} hover:border-ws-line rounded-lg h-7.5 min-w-7 max-w-7`;
   };
 
   onMount(() => {
