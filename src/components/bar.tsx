@@ -1,5 +1,6 @@
-import { Show } from "solid-js";
+import { For } from "solid-js";
 import type { IProviders } from "../util/mock";
+import type { ModuleId } from "../util/providers";
 import { Battery } from "./battery";
 import { Clock } from "./clock";
 import { Cpu } from "./cpu";
@@ -12,18 +13,82 @@ import { module } from "../util/modules";
 import { barStyle } from "../util/bar-style";
 import { barMargin } from "../util/bar-margin";
 import type { BarStyle } from "../util/bar-style";
+import { moduleContainers, type ColumnId } from "../util/module-containers";
+
+const barVariants: Record<BarStyle, string> = {
+  default: "h-7.5 bg-surface border border-line rounded-lg px-2",
+  full: "h-10 bg-surface px-2 border-b border-line",
+  modular: "",
+};
+
+const ModularBox = (props: { children: any }) => {
+  return (
+    <div
+      classList={{
+        "flex items-center": true,
+        "h-7.5 bg-surface border border-line rounded-lg":
+          barStyle.value === "modular",
+      }}
+    >
+      {props.children}
+    </div>
+  );
+};
+
+function visibleItems(col: ColumnId) {
+  return moduleContainers[col].filter((id) => module[id as ModuleId]);
+}
+
+function renderModule(id: string, provider: IProviders) {
+  switch (id) {
+    case "glazewm":
+      return <Glazewm glazewm={provider.glazewm} />;
+    case "clock":
+      return (
+        <ModularBox>
+          <Clock />
+        </ModularBox>
+      );
+    case "network":
+      return (
+        <ModularBox>
+          <Network network={provider.network} />
+        </ModularBox>
+      );
+    case "memory":
+      return (
+        <ModularBox>
+          <Memory memory={provider.memory} />
+        </ModularBox>
+      );
+    case "cpu":
+      return (
+        <ModularBox>
+          <Cpu cpu={provider.cpu} />
+        </ModularBox>
+      );
+    case "battery":
+      return (
+        <ModularBox>
+          <Battery battery={provider.battery} />
+        </ModularBox>
+      );
+    case "weather":
+      return (
+        <ModularBox>
+          <Weather weather={provider.weather} />
+        </ModularBox>
+      );
+    default:
+      return null;
+  }
+}
 
 interface Props {
   provider: IProviders;
 }
 
 export const Bar = (props: Props) => {
-  const barVariants: Record<BarStyle, string> = {
-    default: "h-7.5 bg-surface border border-line rounded-lg px-2",
-    full: "h-10 bg-surface px-2 border-b border-line",
-    modular: "",
-  };
-
   const marginStyle = () =>
     barStyle.value !== "full"
       ? {
@@ -34,66 +99,28 @@ export const Bar = (props: Props) => {
         }
       : undefined;
 
-  const ModuleBox = (props: { children: any }) => {
-    return (
-      <div
-        classList={{
-          "flex items-center": true,
-          "h-7.5 bg-surface border border-line rounded-lg":
-            barStyle.value === "modular",
-        }}
-      >
-        {props.children}
-      </div>
-    );
-  };
-
   return (
     <main
       class={`grid grid-cols-[1fr_1fr_1fr] items-center text-content relative ${barVariants[barStyle.value]}`}
       style={marginStyle()}
     >
       <div class="flex justify-start">
-        <Show when={module.glazewm}>
-          <Glazewm glazewm={props.provider.glazewm} />
-        </Show>
+        <For each={visibleItems("left")}>
+          {(id) => renderModule(id, props.provider)}
+        </For>
       </div>
       <div class="flex justify-center">
-        <Show when={module.clock}>
-          <ModuleBox>
-            <Clock />
-          </ModuleBox>
-        </Show>
+        <For each={visibleItems("center")}>
+          {(id) => renderModule(id, props.provider)}
+        </For>
       </div>
       <div class="flex justify-end gap-4">
-        <Show when={module.network}>
-          <ModuleBox>
-            <Network network={props.provider.network} />
-          </ModuleBox>
-        </Show>
-        <Show when={module.memory}>
-          <ModuleBox>
-            <Memory memory={props.provider.memory} />
-          </ModuleBox>
-        </Show>
-        <Show when={module.cpu}>
-          <ModuleBox>
-            <Cpu cpu={props.provider.cpu} />
-          </ModuleBox>
-        </Show>
-        <Show when={module.battery}>
-          <ModuleBox>
-            <Battery battery={props.provider.battery} />
-          </ModuleBox>
-        </Show>
-        <Show when={module.weather}>
-          <ModuleBox>
-            <Weather weather={props.provider.weather} />
-          </ModuleBox>
-        </Show>
-        <ModuleBox>
+        <For each={visibleItems("right")}>
+          {(id) => renderModule(id, props.provider)}
+        </For>
+        <ModularBox>
           <Settings />
-        </ModuleBox>
+        </ModularBox>
       </div>
     </main>
   );

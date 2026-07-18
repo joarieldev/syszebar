@@ -10,6 +10,7 @@ import { ProdMode } from "./components/mode/prod-mode";
 import { startStorageSyncModule } from "./util/modules";
 import { startStorageSyncBarStyle } from "./util/bar-style";
 import { startStorageSyncBarMargin } from "./util/bar-margin";
+import { startStorageSyncContainers } from "./util/module-containers";
 
 const App = () => {
   createEffect(() => applyTheme(theme));
@@ -20,6 +21,7 @@ const App = () => {
   onCleanup(startStorageSyncModule());
   onCleanup(startStorageSyncBarStyle());
   onCleanup(startStorageSyncBarMargin());
+  onCleanup(startStorageSyncContainers());
 
   return (
     <>
