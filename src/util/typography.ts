@@ -51,17 +51,17 @@ function persist(changes: Partial<TypographyState>) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...DEFAULTS, ...prev, ...changes }));
 }
 
-export function setFontSize(px: number) {
+export function saveFontSize(px: number) {
   setTypography("fontSize", px);
   persist({ fontSize: px });
 }
 
-export function setFontFamily(family: string) {
+export function saveFontFamily(family: string) {
   setTypography("fontFamily", family);
   persist({ fontFamily: family });
 }
 
-export function setTextColor(hex: string) {
+export function saveTextColor(hex: string) {
   setTypography("textColor", hex);
   persist({ textColor: hex });
 }
@@ -69,11 +69,6 @@ export function setTextColor(hex: string) {
 export function resetTextColor() {
   setTypography("textColor", "");
   persist({ textColor: "" });
-}
-
-export function resetTypography() {
-  setTypography({ ...DEFAULTS });
-  persist({ ...DEFAULTS });
 }
 
 function deriveMuted(l: number, c: number, h: number) {

@@ -14,7 +14,7 @@ export const [barStyle, setBarStyle] = createStore<{ value: BarStyle }>({
   value: load(),
 });
 
-export function setStyle(style: BarStyle) {
+export function saveBarStyle(style: BarStyle) {
   setBarStyle("value", style);
   localStorage.setItem(STORAGE_KEY, style);
 }

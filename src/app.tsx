@@ -5,7 +5,7 @@ import {
   applyTypography,
   startStorageSyncTypography,
 } from "./util/typography";
-// import { DevMode } from "./components/mode/dev-mode";
+import { DevMode } from "./components/mode/dev-mode";
 import { ProdMode } from "./components/mode/prod-mode";
 import { startStorageSyncModule } from "./util/modules";
 import { startStorageSyncBarStyle } from "./util/bar-style";
@@ -24,10 +24,7 @@ const App = () => {
   onCleanup(startStorageSyncContainers());
 
   return (
-    <>
-      {/* <DevMode /> */}
-      <ProdMode />
-    </>
+    <>{import.meta.env.VITE_MODE === "dev" ? <DevMode /> : <ProdMode />}</>
   );
 };
 

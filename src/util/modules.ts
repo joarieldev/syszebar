@@ -20,7 +20,7 @@ export const [module, setModule] = createStore<
   loadModules(),
 );
 
-export function toggleModule(id: ModuleId) {
+export function saveToggleModule(id: ModuleId) {
   const next = !module[id];
   setModule(id, next);
   localStorage.setItem(MODULES_KEY, JSON.stringify({ ...module, [id]: next }));

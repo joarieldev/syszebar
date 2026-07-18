@@ -104,17 +104,17 @@ export const Bar = (props: Props) => {
       class={`grid grid-cols-[1fr_1fr_1fr] items-center text-content relative ${barVariants[barStyle.value]}`}
       style={marginStyle()}
     >
-      <div class="flex justify-start">
+      <div class="flex justify-start gap-2">
         <For each={visibleItems("left")}>
           {(id) => renderModule(id, props.provider)}
         </For>
       </div>
-      <div class="flex justify-center">
+      <div class="flex justify-center gap-2">
         <For each={visibleItems("center")}>
           {(id) => renderModule(id, props.provider)}
         </For>
       </div>
-      <div class="flex justify-end gap-4">
+      <div class="flex justify-end gap-2">
         <For each={visibleItems("right")}>
           {(id) => renderModule(id, props.provider)}
         </For>

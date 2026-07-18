@@ -32,23 +32,23 @@ export const [theme, setTheme] = createStore<{
   customColor: storedCustomColor,
 });
 
-export function setMode(mode: "dark" | "light" | "custom") {
+export function saveMode(mode: "dark" | "light" | "custom") {
   setTheme("mode", mode);
   localStorage.setItem(THEME_KEY, mode);
 }
 
-export function toggleTransparent() {
+export function saveToggleTransparent() {
   const next = !theme.transparent;
   setTheme("transparent", next);
   localStorage.setItem(TRANSPARENT_KEY, String(next));
 }
 
-export function setAlpha(value: number) {
+export function saveAlpha(value: number) {
   setTheme("alpha", value);
   localStorage.setItem(ALPHA_KEY, String(value));
 }
 
-export function setCustomColor(hex: string) {
+export function saveCustomColor(hex: string) {
   setTheme("customColor", hex);
   localStorage.setItem(CUSTOM_COLOR_KEY, hex);
 }

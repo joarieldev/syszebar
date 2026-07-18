@@ -1,21 +1,25 @@
 import { createSignal, onCleanup, onMount, Show } from "solid-js";
 import {
   theme,
-  setMode,
-  toggleTransparent,
-  setAlpha,
-  setCustomColor,
+  saveMode,
+  saveToggleTransparent,
+  saveAlpha,
+  saveCustomColor,
 } from "../../util/theme";
 import {
   typography,
-  setFontSize,
-  setFontFamily,
-  setTextColor,
+  saveFontSize,
+  saveFontFamily,
+  saveTextColor,
   resetTextColor,
   FALLBACK_FONTS,
 } from "../../util/typography";
-import { barStyle, setStyle } from "../../util/bar-style";
-import { barMargin, setMargin, resetMargins } from "../../util/bar-margin";
+import { barStyle, saveBarStyle } from "../../util/bar-style";
+import {
+  barMargin,
+  saveBarMargin,
+  resetBarMargins,
+} from "../../util/bar-margin";
 import type { BarStyle } from "../../util/bar-style";
 import { Modules } from "./modules";
 
@@ -30,12 +34,11 @@ export function Panel(props: Props) {
   let fontTriggerRef: HTMLInputElement | undefined;
 
   function selectFont(family: string) {
-    setFontFamily(family);
-    setFontOpen(false);
+    saveFontFamily(family);
   }
 
   function handleCustomFontInput(e: Event) {
-    setFontFamily((e.target as HTMLInputElement).value);
+    saveFontFamily((e.target as HTMLInputElement).value);
   }
 
   function onFontClickOutside(e: MouseEvent) {
@@ -62,12 +65,12 @@ export function Panel(props: Props) {
       style={{ width: `${props.width}px`, height: `${props.height}px` }}
       class={`absolute right-0 top-[calc(100%+10px)] flex ${barStyle.value === "full" ? "right-2.5" : ""}`}
     >
-      <div class="rounded-lg border border-line bg-surface text-content p-4 overflow-y-auto size-full">
+      <div class="rounded-lg border border-line bg-surface text-content py-3 px-4 overflow-y-auto size-full">
         <span class="block mb-1 border-b border-line/50 pb-1 text-sm font-semibold text-muted text-center">
           Settings
         </span>
 
-        <div class="space-y-2 text-xs">
+        <div class="space-y-2.5 text-xs">
           <div class="flex justify-between items-center gap-4">
             <span>Theme</span>
             <div class="flex gap-2">
@@ -77,7 +80,7 @@ export function Panel(props: Props) {
                     type="radio"
                     name="theme-mode"
                     checked={theme.mode === m}
-                    onChange={() => setMode(m)}
+                    onChange={() => saveMode(m)}
                     class="accent-line size-3.5"
                   />
                   <span class="capitalize cursor-pointer">{m}</span>
@@ -85,7 +88,7 @@ export function Panel(props: Props) {
                     <input
                       type="color"
                       value={theme.customColor}
-                      onInput={(e) => setCustomColor(e.currentTarget.value)}
+                      onInput={(e) => saveCustomColor(e.currentTarget.value)}
                       class={`size-5 p-0 border-none bg-transparent ${theme.mode !== "custom" ? "pointer-events-none cursor-default" : "cursor-pointer"}`}
                     />
                   )}
@@ -100,7 +103,7 @@ export function Panel(props: Props) {
               <input
                 type="checkbox"
                 checked={theme.transparent}
-                onChange={toggleTransparent}
+                onChange={saveToggleTransparent}
                 class="accent-line size-3.5 cursor-pointer"
               />
               <div
@@ -112,7 +115,7 @@ export function Panel(props: Props) {
                   max="1"
                   step="0.01"
                   value={theme.alpha}
-                  onInput={(e) => setAlpha(Number(e.currentTarget.value))}
+                  onInput={(e) => saveAlpha(Number(e.currentTarget.value))}
                   class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
                 />
                 <span class="text-content w-10 text-end">
@@ -131,7 +134,7 @@ export function Panel(props: Props) {
                     type="radio"
                     name="bar-style"
                     checked={barStyle.value === s}
-                    onChange={() => setStyle(s)}
+                    onChange={() => saveBarStyle(s)}
                     class="accent-line size-3.5"
                   />
                   <span class="capitalize cursor-pointer">{s}</span>
@@ -141,31 +144,29 @@ export function Panel(props: Props) {
           </div>
 
           <div
-            class={`flex flex-col ${barStyle.value === "full" ? "opacity-25 pointer-events-none" : ""}`}
+            class={`flex flex-col gap-0.5 ${barStyle.value === "full" ? "opacity-25 pointer-events-none" : ""}`}
           >
             <div class="flex justify-between items-center mb-1">
               <span>Margins (px)</span>
               <button
-                onClick={resetMargins}
+                onClick={resetBarMargins}
                 class="text-muted hover:text-content cursor-pointer"
               >
                 Reset
               </button>
             </div>
-            <div class="grid grid-cols-4 gap-1">
+            <div class="grid grid-cols-4 gap-3">
               {(["top", "right", "bottom", "left"] as const).map((side) => (
-                <label class="flex flex-col items-center gap-0.5">
+                <label class="flex items-center gap-1">
                   <span class="text-[10px] uppercase text-muted">
                     {side[0]}
                   </span>
                   <input
                     type="number"
-                    min={0}
-                    max={32}
                     step={1}
                     value={barMargin[side]}
                     onInput={(e) =>
-                      setMargin(
+                      saveBarMargin(
                         side,
                         Math.max(0, Number(e.currentTarget.value)),
                       )
@@ -178,7 +179,7 @@ export function Panel(props: Props) {
           </div>
         </div>
 
-        <span class="block mb-1 border-b border-line/50 py-1 text-sm font-semibold text-muted text-center">
+        <span class="block mb-1 border-b border-line/50 pb-1 text-sm font-semibold text-muted text-center pt-3">
           Typography
         </span>
 
@@ -223,7 +224,7 @@ export function Panel(props: Props) {
                 max={32}
                 step={1}
                 value={typography.fontSize}
-                onInput={(e) => setFontSize(Number(e.currentTarget.value))}
+                onInput={(e) => saveFontSize(Number(e.currentTarget.value))}
                 class="w-12 text-right bg-transparent outline-none focus:ring-1 focus:ring-line border border-line rounded px-1 py-0.5"
               />
               <span class="text-content">px</span>
@@ -236,7 +237,7 @@ export function Panel(props: Props) {
               <input
                 type="color"
                 value={typography.textColor || "#ffffff"}
-                onInput={(e) => setTextColor(e.currentTarget.value)}
+                onInput={(e) => saveTextColor(e.currentTarget.value)}
                 class="size-5 p-0 border-none cursor-pointer bg-transparent"
               />
               <button
@@ -249,7 +250,7 @@ export function Panel(props: Props) {
           </div>
         </div>
 
-        <span class="block mb-1 border-b border-line/50 py-1 text-sm font-semibold text-muted text-center">
+        <span class="block mb-1 border-b border-line/50 pb-1 text-sm font-semibold text-muted text-center pt-2">
           Modules
         </span>
 

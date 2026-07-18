@@ -29,12 +29,12 @@ function persist(changes: Partial<BarMargin>) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...DEFAULTS, ...prev, ...changes }));
 }
 
-export function setMargin(side: keyof BarMargin, px: number) {
+export function saveBarMargin(side: keyof BarMargin, px: number) {
   setBarMargin(side, px);
   persist({ [side]: px });
 }
 
-export function resetMargins() {
+export function resetBarMargins() {
   setBarMargin({ ...DEFAULTS });
   persist(DEFAULTS);
 }

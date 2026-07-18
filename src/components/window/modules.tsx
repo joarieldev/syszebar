@@ -14,7 +14,7 @@ import {
 } from "@thisbeyond/solid-dnd";
 import { batch, For } from "solid-js";
 import { createStore } from "solid-js/store";
-import { module, toggleModule } from "../../util/modules";
+import { module, saveToggleModule } from "../../util/modules";
 import {
   moduleContainers,
   setModuleContainers,
@@ -48,7 +48,7 @@ const Sortable = (props: SortableProps) => {
         <input
           type="checkbox"
           checked={module[props.item as ModuleId]}
-          onChange={() => toggleModule(props.item as ModuleId)}
+          onChange={() => saveToggleModule(props.item as ModuleId)}
           class="accent-line size-3.5 cursor-pointer"
         />
       </div>

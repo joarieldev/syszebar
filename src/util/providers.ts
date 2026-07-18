@@ -1,11 +1,11 @@
 export type ModuleId = "glazewm" | "clock" | "network" | "memory" | "cpu" | "battery" | "weather";
 
-export interface ModuleDef {
+interface ModuleDef {
   id: ModuleId;
   label: string;
 }
 
-export const MODULES: ModuleDef[] = [
+const MODULES: ModuleDef[] = [
   { id: "glazewm", label: "Glazewm" },
   { id: "clock", label: "Clock" },
   { id: "network", label: "Network" },
