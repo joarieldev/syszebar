@@ -16,7 +16,7 @@ import {
 } from "../../util/typography";
 import { barStyle, saveBarStyle } from "../../util/bar-style";
 import {
-  barMargin,
+  barMargins,
   saveBarMargin,
   resetBarMargins,
 } from "../../util/bar-margin";
@@ -63,7 +63,7 @@ export function Panel(props: Props) {
   return (
     <div
       style={{ width: `${props.width}px`, height: `${props.height}px` }}
-      class={`absolute right-0 top-[calc(100%+10px)] flex ${barStyle.value === "full" ? "right-2.5" : ""}`}
+      class="absolute right-2.5 top-[calc(100%+10px)] flex"
     >
       <div class="rounded-lg border border-line bg-surface text-content py-3 px-4 overflow-y-auto size-full">
         <span class="block mb-1 border-b border-line/50 pb-1 text-sm font-semibold text-muted text-center">
@@ -143,9 +143,7 @@ export function Panel(props: Props) {
             </div>
           </div>
 
-          <div
-            class={`flex flex-col gap-0.5 ${barStyle.value === "full" ? "opacity-25 pointer-events-none" : ""}`}
-          >
+          <div class="flex flex-col gap-0.5">
             <div class="flex justify-between items-center mb-1">
               <span>Margins (px)</span>
               <button
@@ -164,7 +162,7 @@ export function Panel(props: Props) {
                   <input
                     type="number"
                     step={1}
-                    value={barMargin[side]}
+                    value={barMargins[barStyle.value][side]}
                     onInput={(e) =>
                       saveBarMargin(
                         side,

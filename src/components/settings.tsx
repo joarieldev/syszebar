@@ -1,7 +1,6 @@
 import { createSignal, Show, onCleanup, onMount } from "solid-js";
 import { expandWindow, collapseWindow } from "../util/window";
 import { DotsVertical } from "../icons/dots-vertical";
-import { barStyle } from "../util/bar-style";
 import { Panel } from "./window/panel";
 
 const PANEL_WIDTH = 340;
@@ -44,10 +43,7 @@ export function Settings() {
     <div ref={wrapperRef} class="flex justify-center items-center">
       <button
         onClick={toggle}
-        classList={{
-          "flex justify-center text-icon cursor-pointer": true,
-          "px-2 py-1.5": barStyle.value === "modular",
-        }}
+        class="flex justify-center text-icon cursor-pointer px-1.5"
       >
         <DotsVertical class="size-4" />
       </button>

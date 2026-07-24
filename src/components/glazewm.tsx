@@ -26,7 +26,7 @@ export const Glazewm = (props: Props) => {
 
     const border = ws.hasFocus ? "border-ws-line" : "border-line";
 
-    return `${base} ${text} bg-surface border ${border} hover:border-ws-line rounded-lg h-7.5 min-w-7 max-w-7`;
+    return `${base} ${text} bg-surface border ${border} hover:border-ws-line rounded-lg min-w-7 max-w-7`;
   };
 
   onMount(() => {
@@ -46,7 +46,7 @@ export const Glazewm = (props: Props) => {
   });
 
   return (
-    <div class="flex items-center max-w-65">
+    <div class="flex h-full items-center max-w-65">
       {showLeft() && (
         <button
           class="cursor-pointer text-muted hover:text-content"
@@ -58,8 +58,7 @@ export const Glazewm = (props: Props) => {
       <div
         ref={ref}
         onScroll={checkScroll}
-        class="flex gap-1 overflow-x-auto
-      scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        class="flex gap-1 overflow-x-auto h-full scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         {props.glazewm?.currentWorkspaces.map((ws) => (
           <button

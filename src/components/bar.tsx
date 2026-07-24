@@ -11,22 +11,22 @@ import { Glazewm } from "./glazewm";
 import { Settings } from "./settings";
 import { module } from "../util/modules";
 import { barStyle } from "../util/bar-style";
-import { barMargin } from "../util/bar-margin";
+import { barMargins } from "../util/bar-margin";
 import type { BarStyle } from "../util/bar-style";
 import { moduleContainers, type ColumnId } from "../util/module-containers";
 
 const barVariants: Record<BarStyle, string> = {
-  default: "h-7.5 bg-surface border border-line rounded-lg px-2",
-  full: "h-10 bg-surface px-2 border-b border-line",
-  modular: "",
+  default: "bg-surface border border-line rounded-lg px-2",
+  full: "bg-surface px-2 border-b border-line",
+  modular: "items-stretch",
 };
 
 const ModularBox = (props: { children: any }) => {
   return (
     <div
+      class="flex items-center h-full"
       classList={{
-        "flex items-center": true,
-        "h-7.5 bg-surface border border-line rounded-lg":
+        "bg-surface border border-line rounded-lg":
           barStyle.value === "modular",
       }}
     >
@@ -89,39 +89,37 @@ interface Props {
 }
 
 export const Bar = (props: Props) => {
-  const marginStyle = () =>
-    barStyle.value !== "full"
-      ? {
-          "margin-top": `${barMargin.top}px`,
-          "margin-right": `${barMargin.right}px`,
-          "margin-bottom": `${barMargin.bottom}px`,
-          "margin-left": `${barMargin.left}px`,
-        }
-      : undefined;
+  const marginStyle = () => ({
+    "padding-top": `${barMargins[barStyle.value].top}px`,
+    "padding-right": `${barMargins[barStyle.value].right}px`,
+    "padding-bottom": `${barMargins[barStyle.value].bottom}px`,
+    "padding-left": `${barMargins[barStyle.value].left}px`,
+  });
 
   return (
-    <main
-      class={`grid grid-cols-[1fr_1fr_1fr] items-center text-content relative ${barVariants[barStyle.value]}`}
-      style={marginStyle()}
-    >
-      <div class="flex justify-start gap-2">
-        <For each={visibleItems("left")}>
-          {(id) => renderModule(id, props.provider)}
-        </For>
-      </div>
-      <div class="flex justify-center gap-2">
-        <For each={visibleItems("center")}>
-          {(id) => renderModule(id, props.provider)}
-        </For>
-      </div>
-      <div class="flex justify-end gap-2">
-        <For each={visibleItems("right")}>
-          {(id) => renderModule(id, props.provider)}
-        </For>
-        <ModularBox>
-          <Settings />
-        </ModularBox>
-      </div>
-    </main>
+    <div class="h-10 relative" style={marginStyle()}>
+      <main
+        class={`h-full min-h-min grid grid-cols-[1fr_1fr_1fr] items-center text-content ${barVariants[barStyle.value]}`}
+      >
+        <div class="flex justify-start items-center gap-2">
+          <For each={visibleItems("left")}>
+            {(id) => renderModule(id, props.provider)}
+          </For>
+        </div>
+        <div class="flex justify-center items-center gap-2">
+          <For each={visibleItems("center")}>
+            {(id) => renderModule(id, props.provider)}
+          </For>
+        </div>
+        <div class="flex justify-end items-center gap-2">
+          <For each={visibleItems("right")}>
+            {(id) => renderModule(id, props.provider)}
+          </For>
+          <ModularBox>
+            <Settings />
+          </ModularBox>
+        </div>
+      </main>
+    </div>
   );
 };
