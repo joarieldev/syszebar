@@ -4,15 +4,22 @@ import { barStyle } from "./bar-style";
 
 export interface BarMargin {
   top: number;
-  right: number;
   bottom: number;
-  left: number;
+  x: number;
+  compactX: boolean;
 }
+
+export const LIMITS = {
+  top: 30,
+  bottom: 30,
+  x: 100,
+  height: 40,
+};
 
 const STORAGE_KEY = "syszebar-bar-margins";
 
-const DEFAULTS: BarMargin = { top: 10, right: 10, bottom: 0, left: 10 };
-const DEFAULTS_FULL: BarMargin = { top: 0, right: 0, bottom: 0, left: 0 };
+const DEFAULTS: BarMargin = { top: 10, bottom: 0, x: 10, compactX: false };
+const DEFAULTS_FULL: BarMargin = { top: 0, bottom: 0, x: 0, compactX: false, };
 
 function makeDefaults(): Record<BarStyle, BarMargin> {
   return {
@@ -43,8 +50,25 @@ function persist() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(barMargins));
 }
 
-export function saveBarMargin(side: keyof BarMargin, px: number) {
-  setBarMargins(barStyle.value, side, px);
+export function saveBarMargin(side: "top" | "bottom" | "x", px: number) {
+  const prev = barMargins[barStyle.value];
+  const value = Math.min(Math.max(0, px), LIMITS[side]);
+  const next = { ...prev, [side]: value };
+  // clamp vertical margins
+  if (side === "top" || side === "bottom") {
+    const other = side === "top" ? "bottom" : "top";
+    const overflow = next.top + next.bottom - LIMITS.height;
+    if (overflow > 0) {
+      next[other] = Math.max(0, next[other] - overflow);
+    }
+  }
+
+  setBarMargins(barStyle.value, next);
+  persist();
+}
+
+export function saveBarCompactX(isCompact: boolean) {
+  setBarMargins(barStyle.value, "compactX", isCompact);
   persist();
 }
 

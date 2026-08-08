@@ -19,6 +19,8 @@ import {
   barMargins,
   saveBarMargin,
   resetBarMargins,
+  LIMITS,
+  saveBarCompactX,
 } from "../../util/bar-margin";
 import type { BarStyle } from "../../util/bar-style";
 import { Modules } from "./modules";
@@ -153,14 +155,16 @@ export function Panel(props: Props) {
                 Reset
               </button>
             </div>
-            <div class="grid grid-cols-4 gap-3">
-              {(["top", "right", "bottom", "left"] as const).map((side) => (
-                <label class="flex items-center gap-1">
+            <div class="grid grid-cols-2 gap-3">
+              {(["top", "bottom", "x"] as const).map((side) => (
+                <div class="flex items-center gap-1" classList={{ "opacity-25 pointer-events-none": side === "x" && barMargins[barStyle.value].compactX }}>
                   <span class="text-[10px] uppercase text-muted">
                     {side[0]}
                   </span>
                   <input
-                    type="number"
+                    type="range"
+                    min="0"
+                    max={LIMITS[side]}
                     step={1}
                     value={barMargins[barStyle.value][side]}
                     onInput={(e) =>
@@ -169,10 +173,22 @@ export function Panel(props: Props) {
                         Math.max(0, Number(e.currentTarget.value)),
                       )
                     }
-                    class="w-full text-center bg-transparent outline-none focus:ring-1 focus:ring-line border border-line rounded px-1 py-0.5"
+                    class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
                   />
-                </label>
+                  <span class="text-content w-10 text-center">
+                    {barMargins[barStyle.value][side]}
+                  </span>
+                </div>
               ))}
+              <label class="flex items-center gap-1">
+                <span class="text-[10px] uppercase text-muted cursor-pointer">compact-x</span>
+                <input
+                  type="checkbox"
+                  checked={barMargins[barStyle.value].compactX}
+                  onChange={() => saveBarCompactX(!barMargins[barStyle.value].compactX)}
+                  class="accent-line size-3.5 cursor-pointer"
+                />
+              </label>
             </div>
           </div>
         </div>

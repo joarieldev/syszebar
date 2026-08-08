@@ -89,17 +89,29 @@ interface Props {
 }
 
 export const Bar = (props: Props) => {
-  const marginStyle = () => ({
-    "padding-top": `${barMargins[barStyle.value].top}px`,
-    "padding-right": `${barMargins[barStyle.value].right}px`,
-    "padding-bottom": `${barMargins[barStyle.value].bottom}px`,
-    "padding-left": `${barMargins[barStyle.value].left}px`,
-  });
+  const margins = () => barMargins[barStyle.value];
+
+  const marginStyle = () => {
+    if (margins().compactX) {
+      return {
+        "padding-top": `${margins().top}px`,
+        "padding-bottom": `${margins().bottom}px`,
+        "display": "flex",
+        "justify-content": "center",
+      };
+    }
+    return {
+      "padding-top": `${margins().top}px`,
+      "padding-right": `${margins().x}px`,
+      "padding-bottom": `${margins().bottom}px`,
+      "padding-left": `${margins().x}px`,
+    };
+  };
 
   return (
     <div class="h-10 relative" style={marginStyle()}>
       <main
-        class={`h-full min-h-min grid grid-cols-[1fr_1fr_1fr] items-center text-content ${barVariants[barStyle.value]}`}
+        class={`h-full min-h-min items-center text-content ${barVariants[barStyle.value]} ${margins().compactX ? "w-fit flex gap-2" : "grid grid-cols-[1fr_1fr_1fr]"}`}
       >
         <div class="flex justify-start items-center gap-2">
           <For each={visibleItems("left")}>
