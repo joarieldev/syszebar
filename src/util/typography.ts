@@ -3,6 +3,7 @@ import { hexToOklch } from "./theme";
 
 export interface TypographyState {
   fontSize: number;
+  iconSize: number;
   fontFamily: string;
   textColor: string;
 }
@@ -29,6 +30,7 @@ export const FALLBACK_FONTS: { family: string }[] = [
 
 const DEFAULTS: TypographyState = {
   fontSize: 14,
+  iconSize: 16,
   fontFamily: "system-ui, sans-serif",
   textColor: "",
 };
@@ -54,6 +56,11 @@ function persist(changes: Partial<TypographyState>) {
 export function saveFontSize(px: number) {
   setTypography("fontSize", px);
   persist({ fontSize: px });
+}
+
+export function saveIconSize(px: number) {
+  setTypography("iconSize", px);
+  persist({ iconSize: px });
 }
 
 export function saveFontFamily(family: string) {
@@ -84,6 +91,7 @@ export function applyTypography(state: TypographyState) {
   const root = document.documentElement;
   root.style.setProperty("--text-font-size", `${state.fontSize}px`);
   root.style.setProperty("--text-font-family", state.fontFamily);
+  root.style.setProperty("--text-icon-size", `${state.iconSize}px`);
   if (state.textColor) {
     const parsed = hexToOklch(state.textColor);
     root.style.setProperty("--color-content", state.textColor);

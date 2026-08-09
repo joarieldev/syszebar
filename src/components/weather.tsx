@@ -30,7 +30,7 @@ const ICONS: Record<WeatherStatus, Icon> = {
 
 const getWeatherIcon = (status: WeatherStatus) => {
   const Icon = ICONS[status];
-  return <Icon class="size-4" />;
+  return <Icon class="size-icon" />;
 };
 
 export const Weather = (props: Props) => {

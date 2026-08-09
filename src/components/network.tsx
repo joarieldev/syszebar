@@ -17,7 +17,7 @@ export const Network = (props: Props) => {
   return (
     <div class="flex items-center justify-center gap-0.5 px-2">
       <span class="flex justify-center text-icon">
-        <NetworkIcon class="size-4" />
+        <NetworkIcon class="size-icon" />
       </span>
       <div class="flex tabular-nums text-center">
         <span class="w-20">

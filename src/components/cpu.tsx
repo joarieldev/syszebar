@@ -8,7 +8,7 @@ interface Props {
 export const Cpu = (props: Props) => (
   <div class="flex items-center justify-center gap-0.5 px-2">
     <span class="flex justify-center text-icon">
-      <CpuIcon class="size-4" />
+      <CpuIcon class="size-icon" />
     </span>
     <span class="tabular-nums w-10 text-center">
       {props.cpu ? `${Math.round(props.cpu.usage)}%` : "---"}

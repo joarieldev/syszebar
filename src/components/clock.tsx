@@ -1,4 +1,5 @@
 import { createSignal, onCleanup } from "solid-js";
+import { Clock as ClockIcon } from "../icons/clock";
 
 const formatter = new Intl.DateTimeFormat("es-AR", {
   hour: "2-digit",
@@ -14,7 +15,10 @@ export const Clock = () => {
   onCleanup(() => clearInterval(timer));
 
   return (
-    <div class="flex items-center justify-center px-2">
+    <div class="flex items-center justify-center gap-1.5 px-2">
+      <span class="flex justify-center text-icon">
+        <ClockIcon class="size-icon" />
+      </span>
       <span class="tabular-nums">{time()}</span>
     </div>
   );

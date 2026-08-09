@@ -9,6 +9,7 @@ import {
 import {
   typography,
   saveFontSize,
+  saveIconSize,
   saveFontFamily,
   saveTextColor,
   resetTextColor,
@@ -233,15 +234,15 @@ export function Panel(props: Props) {
             <span>Font size</span>
             <div class="flex items-center gap-1">
               <input
-                type="number"
-                min={8}
-                max={32}
-                step={1}
+                type="range"
+                min="8"
+                max="32"
+                step="1"
                 value={typography.fontSize}
                 onInput={(e) => saveFontSize(Number(e.currentTarget.value))}
-                class="w-12 text-right bg-transparent outline-none focus:ring-1 focus:ring-line border border-line rounded px-1 py-0.5"
+                class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
               />
-              <span class="text-content">px</span>
+              <span class="text-content w-8 text-end">{typography.fontSize}px</span>
             </div>
           </div>
 
@@ -260,6 +261,22 @@ export function Panel(props: Props) {
               >
                 Reset
               </button>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center gap-4">
+            <span>Icon size</span>
+            <div class="flex items-center gap-1">
+              <input
+                type="range"
+                min="8"
+                max="32"
+                step="1"
+                value={typography.iconSize}
+                onInput={(e) => saveIconSize(Number(e.currentTarget.value))}
+                class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
+              />
+              <span class="text-content w-8 text-end">{typography.iconSize}px</span>
             </div>
           </div>
         </div>

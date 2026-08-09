@@ -8,7 +8,7 @@ interface Props {
 export const Memory = (props: Props) => (
   <div class="flex items-center justify-center gap-0.5 px-2">
     <span class="flex justify-center text-icon">
-      <DeviceSim class="size-4" />
+      <DeviceSim class="size-icon" />
     </span>
     <span class="tabular-nums w-10 text-center">
       {props.memory ? `${Math.round(props.memory.usage)}%` : "---"}

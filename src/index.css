@@ -70,6 +70,12 @@
 :root {
   --text-font-size: 14px;
   --text-font-family: system-ui, sans-serif;
+  --text-icon-size: 16px;
+}
+
+.size-icon {
+  width: var(--text-icon-size);
+  height: var(--text-icon-size);
 }
 
 body {
