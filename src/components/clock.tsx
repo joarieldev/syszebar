@@ -1,5 +1,6 @@
 import { createSignal, onCleanup } from "solid-js";
 import { Clock as ClockIcon } from "../icons/clock";
+import { moduleColors } from "../util/module-colors";
 
 const formatter = new Intl.DateTimeFormat("es-AR", {
   hour: "2-digit",
@@ -16,7 +17,10 @@ export const Clock = () => {
 
   return (
     <div class="flex items-center justify-center gap-1.5 px-2">
-      <span class="flex justify-center text-icon">
+      <span
+        class="flex justify-center text-icon"
+        style={{ color: moduleColors.clock || undefined }}
+      >
         <ClockIcon class="size-icon" />
       </span>
       <span class="tabular-nums">{time()}</span>

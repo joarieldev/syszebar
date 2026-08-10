@@ -6,6 +6,7 @@ import { Cloud } from "../icons/cloud";
 import { CloudRain } from "../icons/cloud-rain";
 import { CloudSnow } from "../icons/cloud-snow";
 import { CloudStorm } from "../icons/cloud-storm";
+import { moduleColors } from "../util/module-colors";
 
 interface Props {
   weather: WeatherOutput | null;
@@ -36,7 +37,10 @@ const getWeatherIcon = (status: WeatherStatus) => {
 export const Weather = (props: Props) => {
   return (
     <div class="flex items-center justify-center gap-0.5 px-2">
-      <span class="flex justify-center text-icon">
+      <span
+        class="flex justify-center text-icon"
+        style={{ color: moduleColors.weather || undefined }}
+      >
         {props.weather && getWeatherIcon(props.weather.status)}
       </span>
       <span class="tabular-nums w-10 text-center">

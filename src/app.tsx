@@ -11,6 +11,7 @@ import { startStorageSyncModule } from "./util/modules";
 import { startStorageSyncBarStyle } from "./util/bar-style";
 import { startStorageSyncBarMargin } from "./util/bar-margin";
 import { startStorageSyncContainers } from "./util/module-containers";
+import { startStorageSyncModuleColors } from "./util/module-colors";
 
 const App = () => {
   createEffect(() => applyTheme(theme));
@@ -22,6 +23,7 @@ const App = () => {
   onCleanup(startStorageSyncBarStyle());
   onCleanup(startStorageSyncBarMargin());
   onCleanup(startStorageSyncContainers());
+  onCleanup(startStorageSyncModuleColors());
 
   return (
     <>{import.meta.env.VITE_MODE === "dev" ? <DevMode /> : <ProdMode />}</>

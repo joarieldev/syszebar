@@ -1,5 +1,7 @@
 export type ModuleId = "glazewm" | "clock" | "network" | "memory" | "cpu" | "battery" | "weather";
 
+export type ModuleIdWithIcon = Exclude<ModuleId, "glazewm">;
+
 interface ModuleDef {
   id: ModuleId;
   label: string;

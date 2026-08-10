@@ -1,5 +1,6 @@
 import type { BatteryOutput } from "zebar";
 import { Battery4 } from "../icons/battery-4";
+import { moduleColors } from "../util/module-colors";
 
 interface Props {
   battery: BatteryOutput | null;
@@ -7,7 +8,10 @@ interface Props {
 
 export const Battery = (props: Props) => (
   <div class="flex items-center justify-center gap-0.5 px-2">
-    <span class="flex justify-center text-icon">
+    <span
+      class="flex justify-center text-icon"
+      style={{ color: moduleColors.battery || undefined }}
+    >
       <Battery4 class="size-icon" />
     </span>
     <span class="tabular-nums w-10 text-center">

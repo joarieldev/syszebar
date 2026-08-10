@@ -1,5 +1,6 @@
 import type { CpuOutput } from "zebar";
 import { Cpu as CpuIcon } from "../icons/cpu";
+import { moduleColors } from "../util/module-colors";
 
 interface Props {
   cpu: CpuOutput | null;
@@ -7,7 +8,10 @@ interface Props {
 
 export const Cpu = (props: Props) => (
   <div class="flex items-center justify-center gap-0.5 px-2">
-    <span class="flex justify-center text-icon">
+    <span
+      class="flex justify-center text-icon"
+      style={{ color: moduleColors.cpu || undefined }}
+    >
       <CpuIcon class="size-icon" />
     </span>
     <span class="tabular-nums w-10 text-center">

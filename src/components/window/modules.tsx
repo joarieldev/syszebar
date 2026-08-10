@@ -12,7 +12,7 @@ import {
   type Droppable,
   type Id,
 } from "@thisbeyond/solid-dnd";
-import { batch, For } from "solid-js";
+import { batch, For, Show } from "solid-js";
 import { createStore } from "solid-js/store";
 import { module, saveToggleModule } from "../../util/modules";
 import {
@@ -23,7 +23,14 @@ import {
   type ContainerMap,
 } from "../../util/module-containers";
 import { GripVertical } from "../../icons/grip-vertical";
-import type { ModuleId } from "../../util/providers";
+import type { ModuleId, ModuleIdWithIcon } from "../../util/providers";
+import {
+  moduleColors,
+  saveModuleColor,
+  resetModuleColor,
+  MODULES_WITH_ICON,
+} from "../../util/module-colors";
+import { X } from "../../icons/x";
 
 interface SortableProps {
   item: string;
@@ -39,12 +46,32 @@ const Sortable = (props: SortableProps) => {
       style={transformStyle(sortable.transform)}
     >
       <div class="flex justify-center items-center gap-1">
-        <div class="cursor-move" {...sortable.dragActivators}>
+        <div class="cursor-grab" {...sortable.dragActivators}>
           <GripVertical class="size-3" />
         </div>
         <span>{props.item}</span>
       </div>
       <div class="flex justify-center items-center gap-2">
+        <Show when={MODULES_WITH_ICON.hasOwnProperty(props.item as ModuleIdWithIcon)}>
+          <div class="flex items-center">
+            <input
+              type="color"
+              value={moduleColors[props.item as ModuleIdWithIcon] || "#ffffff"}
+              onInput={(e) =>
+                saveModuleColor(props.item as ModuleIdWithIcon, e.currentTarget.value)
+              }
+              title="Icon color"
+              class="size-5 p-0 border-none cursor-pointer bg-transparent"
+            />
+            <button
+              onClick={() => resetModuleColor(props.item as ModuleIdWithIcon)}
+              title="Reset"
+              class="text-muted hover:text-content cursor-pointer"
+            >
+              <X class="size-3" />
+            </button>
+          </div>
+        </Show>
         <input
           type="checkbox"
           checked={module[props.item as ModuleId]}

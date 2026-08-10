@@ -1,5 +1,6 @@
 import type { NetworkOutput } from "zebar";
 import { Network as NetworkIcon } from "../icons/network";
+import { moduleColors } from "../util/module-colors";
 
 interface Props {
   network: NetworkOutput | null;
@@ -16,7 +17,10 @@ const formatTraffic = (ds: { siValue: number; siUnit: string }) => {
 export const Network = (props: Props) => {
   return (
     <div class="flex items-center justify-center gap-0.5 px-2">
-      <span class="flex justify-center text-icon">
+      <span
+        class="flex justify-center text-icon"
+        style={{ color: moduleColors.network || undefined }}
+      >
         <NetworkIcon class="size-icon" />
       </span>
       <div class="flex tabular-nums text-center">
