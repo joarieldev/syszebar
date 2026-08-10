@@ -45,7 +45,7 @@ export function Settings() {
         onClick={toggle}
         class="flex justify-center text-icon cursor-pointer px-1.5"
       >
-        <DotsVertical class="size-icon" />
+        <DotsVertical class="size-4" />
       </button>
 
       <Show when={opened()}>

@@ -7,6 +7,7 @@ import { CloudRain } from "../icons/cloud-rain";
 import { CloudSnow } from "../icons/cloud-snow";
 import { CloudStorm } from "../icons/cloud-storm";
 import { moduleColors } from "../util/module-colors";
+import { displayMode, MODULE_LABELS } from "../util/module-display";
 
 interface Props {
   weather: WeatherOutput | null;
@@ -38,10 +39,16 @@ export const Weather = (props: Props) => {
   return (
     <div class="flex items-center justify-center gap-0.5 px-2">
       <span
-        class="flex justify-center text-icon"
+        class="flex justify-center items-center text-icon"
         style={{ color: moduleColors.weather || undefined }}
       >
-        {props.weather && getWeatherIcon(props.weather.status)}
+        {displayMode() === "icon" ? (
+          props.weather && getWeatherIcon(props.weather.status)
+        ) : (
+          <span class="leading-none text-(length:--text-icon-size)">
+            {MODULE_LABELS.weather}
+          </span>
+        )}
       </span>
       <span class="tabular-nums w-10 text-center">
         {props.weather ? `${Math.round(props.weather.celsiusTemp)}°C` : "---"}

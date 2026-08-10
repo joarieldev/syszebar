@@ -1,5 +1,5 @@
 import { createStore } from "solid-js/store";
-import { type ModuleIdWithIcon } from "./providers";
+import { type ModuleIdWithIcon } from "./modules";
 
 const COLORS_KEY = "syszebar-module-colors";
 

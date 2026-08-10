@@ -23,7 +23,7 @@ import {
   type ContainerMap,
 } from "../../util/module-containers";
 import { GripVertical } from "../../icons/grip-vertical";
-import type { ModuleId, ModuleIdWithIcon } from "../../util/providers";
+import type { ModuleId, ModuleIdWithIcon } from "../../util/modules";
 import {
   moduleColors,
   saveModuleColor,

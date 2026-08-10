@@ -1,6 +1,6 @@
 import { For } from "solid-js";
 import type { IProviders } from "../util/mock";
-import type { ModuleId } from "../util/providers";
+import type { ModuleId } from "../util/modules";
 import { Battery } from "./battery";
 import { Clock } from "./clock";
 import { Cpu } from "./cpu";

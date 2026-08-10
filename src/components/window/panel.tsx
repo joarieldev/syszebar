@@ -24,6 +24,7 @@ import {
   saveBarCompactX,
 } from "../../util/bar-margin";
 import type { BarStyle } from "../../util/bar-style";
+import { displayMode, saveDisplayMode } from "../../util/module-display";
 import { Modules } from "./modules";
 
 interface Props {
@@ -261,6 +262,24 @@ export function Panel(props: Props) {
               >
                 Reset
               </button>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center gap-4">
+            <span>Display Icon</span>
+            <div class="flex gap-2">
+              {(["icon", "text"] as const).map((m) => (
+                <label class="flex items-center gap-1">
+                  <input
+                    type="radio"
+                    name="module-display"
+                    checked={displayMode() === m}
+                    onChange={() => saveDisplayMode(m)}
+                    class="accent-line size-3.5"
+                  />
+                  <span class="capitalize cursor-pointer">{m}</span>
+                </label>
+              ))}
             </div>
           </div>
 
