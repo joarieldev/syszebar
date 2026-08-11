@@ -1,9 +1,9 @@
 import { createSignal } from "solid-js";
-import type { ModuleIdWithIcon } from "./modules";
+import type { ModuleIdWithLabel } from "./modules";
 
 export type DisplayMode = "icon" | "text";
 
-export const MODULE_LABELS: Record<ModuleIdWithIcon, string> = {
+export const MODULE_LABELS: Record<ModuleIdWithLabel, string> = {
   clock: "CAL",
   network: "NET",
   memory: "RAM",

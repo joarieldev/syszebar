@@ -9,7 +9,7 @@ const KEY = "syszebar-containers";
 export const DEFAULTS: ContainerMap = {
   left: ["glazewm"],
   center: ["clock"],
-  right: ["network", "memory", "cpu", "battery", "weather"],
+  right: ["network", "memory", "cpu", "battery", "weather", "settings"],
 };
 
 function load(): ContainerMap {

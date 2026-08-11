@@ -8,7 +8,7 @@ import { Memory } from "./memory";
 import { Network } from "./network";
 import { Weather } from "./weather";
 import { Glazewm } from "./glazewm";
-import { Settings } from "./settings";
+import { Settings, settingsOpen } from "./settings";
 import { module } from "../util/modules";
 import { barStyle } from "../util/bar-style";
 import { barMargins } from "../util/bar-margin";
@@ -36,10 +36,10 @@ const ModularBox = (props: { children: any }) => {
 };
 
 function visibleItems(col: ColumnId) {
-  return moduleContainers[col].filter((id) => module[id as ModuleId]);
+  return moduleContainers[col].filter((id) => module[id as ModuleId] || id === "settings");
 }
 
-function renderModule(id: string, provider: IProviders) {
+function renderModule(id: string, provider: IProviders, col: ColumnId) {
   switch (id) {
     case "glazewm":
       return <Glazewm glazewm={provider.glazewm} />;
@@ -79,6 +79,14 @@ function renderModule(id: string, provider: IProviders) {
           <Weather weather={provider.weather} />
         </ModularBox>
       );
+    case "settings":
+      return (
+        <div class={`${module["settings"] || settingsOpen() ? "" : "hidden"} group-hover:flex h-full`}>
+          <ModularBox>
+            <Settings column={col} />
+          </ModularBox>
+        </div>
+      );
     default:
       return null;
   }
@@ -113,23 +121,20 @@ export const Bar = (props: Props) => {
       <main
         class={`h-full min-h-min items-center text-content ${barVariants[barStyle.value]} ${margins().compactX ? "w-fit flex gap-2" : "grid grid-cols-[1fr_1fr_1fr]"}`}
       >
-        <div class="flex justify-start items-center gap-2">
+        <div class="flex justify-start items-center gap-2 group">
           <For each={visibleItems("left")}>
-            {(id) => renderModule(id, props.provider)}
+            {(id) => renderModule(id, props.provider, "left")}
           </For>
         </div>
-        <div class="flex justify-center items-center gap-2">
+        <div class="flex justify-center items-center gap-2 group">
           <For each={visibleItems("center")}>
-            {(id) => renderModule(id, props.provider)}
+            {(id) => renderModule(id, props.provider, "center")}
           </For>
         </div>
-        <div class="flex justify-end items-center gap-2">
+        <div class="flex justify-end items-center gap-2 group">
           <For each={visibleItems("right")}>
-            {(id) => renderModule(id, props.provider)}
+            {(id) => renderModule(id, props.provider, "right")}
           </For>
-          <ModularBox>
-            <Settings />
-          </ModularBox>
         </div>
       </main>
     </div>

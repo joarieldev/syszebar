@@ -1,8 +1,9 @@
 import { createStore } from "solid-js/store";
 
-export type ModuleId = "glazewm" | "clock" | "network" | "memory" | "cpu" | "battery" | "weather";
+export type ModuleId = "glazewm" | "clock" | "network" | "memory" | "cpu" | "battery" | "weather" | "settings";
 
 export type ModuleIdWithIcon = Exclude<ModuleId, "glazewm">;
+export type ModuleIdWithLabel = Exclude<ModuleId, "glazewm" | "settings">;
 
 interface ModuleDef {
   id: ModuleId;
@@ -17,6 +18,7 @@ const MODULES: ModuleDef[] = [
   { id: "cpu", label: "CPU" },
   { id: "battery", label: "Battery" },
   { id: "weather", label: "Weather" },
+  { id: "settings", label: "Settings" },
 ];
 
 export const ALL_ENABLED: Record<ModuleId, boolean> = Object.fromEntries(

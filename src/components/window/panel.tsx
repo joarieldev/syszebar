@@ -30,6 +30,7 @@ import { Modules } from "./modules";
 interface Props {
   width?: number;
   height?: number;
+  positionClass?: string;
 }
 
 export function Panel(props: Props) {
@@ -67,7 +68,7 @@ export function Panel(props: Props) {
   return (
     <div
       style={{ width: `${props.width}px`, height: `${props.height}px` }}
-      class="absolute right-2.5 top-[calc(100%+10px)] flex"
+      class={`absolute top-[calc(100%+10px)] flex ${props.positionClass}`}
     >
       <div class="rounded-lg border border-line bg-surface text-content py-3 px-4 overflow-y-auto size-full">
         <span class="block mb-1 border-b border-line/50 pb-1 text-sm font-semibold text-muted text-center">
