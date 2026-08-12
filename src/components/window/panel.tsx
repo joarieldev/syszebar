@@ -34,6 +34,19 @@ import { displayMode, saveDisplayMode } from "../../util/module-display";
 import { Modules } from "./modules";
 import { Rotate } from "../../icons/rotate";
 
+function handleRangeWheel(e: WheelEvent) {
+  e.preventDefault();
+  const input = e.currentTarget as HTMLInputElement;
+  const min = Number(input.min);
+  const max = Number(input.max);
+  const step = Number(input.step) || 1;
+  const next = Number(input.value) + step * -Math.sign(e.deltaY);
+  if (next < min || next > max) return;
+  const precision = String(step).split(".")[1]?.length ?? 0;
+  input.value = String(Number(next.toFixed(precision)));
+  input.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
 interface Props {
   width?: number;
   height?: number;
@@ -128,9 +141,10 @@ export function Panel(props: Props) {
                   step="0.01"
                   value={theme.alpha}
                   onInput={(e) => saveAlpha(Number(e.currentTarget.value))}
+                  onWheel={handleRangeWheel}
                   class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
                 />
-                <span class="text-content w-10 text-end">
+                <span class="tabular-nums w-12 text-end">
                   {Math.round(theme.alpha * 100)}%
                 </span>
               </div>
@@ -184,9 +198,10 @@ export function Panel(props: Props) {
                         Math.max(0, Number(e.currentTarget.value)),
                       )
                     }
+                    onWheel={handleRangeWheel}
                     class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
                   />
-                  <span class="text-content w-10 text-center">
+                  <span class="tabular-nums w-10 text-center">
                     {barMargins[barStyle.value][side]}
                   </span>
                 </div>
@@ -229,9 +244,10 @@ export function Panel(props: Props) {
                       Math.max(0, Number(e.currentTarget.value)),
                     )
                   }
+                  onWheel={handleRangeWheel}
                   class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
                 />
-                <span class="w-10 text-center">
+                <span class="tabular-nums w-10 text-center">
                   {barBorders[barStyle.value].radius}
                 </span>
               </div>
@@ -249,9 +265,10 @@ export function Panel(props: Props) {
                       Math.max(0, Number(e.currentTarget.value)),
                     )
                   }
+                  onWheel={handleRangeWheel}
                   class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
                 />
-                <span class="w-10 text-center">
+                <span class="tabular-nums w-10 text-center">
                   {barBorders[barStyle.value].width}
                 </span>
               </div>
@@ -305,9 +322,10 @@ export function Panel(props: Props) {
                 step="1"
                 value={typography.fontSize}
                 onInput={(e) => saveFontSize(Number(e.currentTarget.value))}
+                onWheel={handleRangeWheel}
                 class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
               />
-              <span class="text-content w-8 text-end">{typography.fontSize}px</span>
+              <span class="tabular-nums w-10 text-end">{typography.fontSize}px</span>
             </div>
           </div>
 
@@ -358,9 +376,10 @@ export function Panel(props: Props) {
                 step="1"
                 value={typography.iconSize}
                 onInput={(e) => saveIconSize(Number(e.currentTarget.value))}
+                onWheel={handleRangeWheel}
                 class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
               />
-              <span class="text-content w-8 text-end">{typography.iconSize}px</span>
+              <span class="tabular-nums w-10 text-end">{typography.iconSize}px</span>
             </div>
           </div>
         </div>
