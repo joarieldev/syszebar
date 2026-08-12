@@ -9,7 +9,7 @@ export interface BarMargin {
   compactX: boolean;
 }
 
-export const LIMITS = {
+export const MARGIN_LIMITS = {
   top: 30,
   bottom: 30,
   x: 100,
@@ -52,12 +52,12 @@ function persist() {
 
 export function saveBarMargin(side: "top" | "bottom" | "x", px: number) {
   const prev = barMargins[barStyle.value];
-  const value = Math.min(Math.max(0, px), LIMITS[side]);
+  const value = Math.min(Math.max(0, px), MARGIN_LIMITS[side]);
   const next = { ...prev, [side]: value };
   // clamp vertical margins
   if (side === "top" || side === "bottom") {
     const other = side === "top" ? "bottom" : "top";
-    const overflow = next.top + next.bottom - LIMITS.height;
+    const overflow = next.top + next.bottom - MARGIN_LIMITS.height;
     if (overflow > 0) {
       next[other] = Math.max(0, next[other] - overflow);
     }

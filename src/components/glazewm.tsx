@@ -1,6 +1,7 @@
 import { createSignal, onCleanup, onMount } from "solid-js";
 import type { GlazeWmOutput } from "zebar";
 import { barStyle } from "../util/bar-style";
+import { barBorders } from "../util/bar-border";
 
 interface Props {
   glazewm: GlazeWmOutput | null;
@@ -26,8 +27,17 @@ export const Glazewm = (props: Props) => {
 
     const border = ws.hasFocus ? "border-ws-line" : "border-line";
 
-    return `${base} ${text} bg-surface border ${border} hover:border-ws-line rounded-lg min-w-7 max-w-7`;
+    return `${base} ${text} bg-surface border ${border} hover:border-ws-line min-w-7 max-w-7`;
   };
+
+  const wsBorderStyle = () => {
+    if (barStyle.value !== "modular") return {};
+    const b = barBorders[barStyle.value];
+    return {
+      "border-width": `${b.width}px`,
+      "border-radius": `${b.radius}px`,
+    };
+  }
 
   onMount(() => {
     const el = ref;
@@ -63,6 +73,7 @@ export const Glazewm = (props: Props) => {
         {props.glazewm?.currentWorkspaces.map((ws) => (
           <button
             class={wsBtnClasses(ws)}
+            style={wsBorderStyle()}
             onClick={() =>
               props.glazewm?.runCommand(`focus --workspace ${ws.name}`)
             }

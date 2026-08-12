@@ -12,22 +12,37 @@ import { Settings, settingsOpen } from "./settings";
 import { module } from "../util/modules";
 import { barStyle } from "../util/bar-style";
 import { barMargins } from "../util/bar-margin";
+import { barBorders } from "../util/bar-border";
 import type { BarStyle } from "../util/bar-style";
 import { moduleContainers, type ColumnId } from "../util/module-containers";
 
 const barVariants: Record<BarStyle, string> = {
-  default: "bg-surface border border-line rounded-lg px-2",
+  default: "bg-surface border border-line px-2",
   full: "bg-surface px-2 border-b border-line",
   modular: "items-stretch",
+};
+
+const barBorderStyle = () => {
+  const b = barBorders[barStyle.value];
+  if (barStyle.value === "full") {
+    return {
+      "border-bottom-width": `${b.width}px`,
+      "border-radius": `${b.radius}px`,
+    };
+  }
+  return {
+    "border-width": `${b.width}px`,
+    "border-radius": `${b.radius}px`,
+  };
 };
 
 const ModularBox = (props: { children: any }) => {
   return (
     <div
       class="flex items-center h-full"
+      style={barStyle.value === "modular" ? barBorderStyle() : undefined}
       classList={{
-        "bg-surface border border-line rounded-lg":
-          barStyle.value === "modular",
+        "bg-surface border border-line": barStyle.value === "modular",
       }}
     >
       {props.children}
@@ -119,6 +134,7 @@ export const Bar = (props: Props) => {
   return (
     <div class="h-10 relative" style={marginStyle()}>
       <main
+        style={barStyle.value === "modular" ? undefined : barBorderStyle()}
         class={`h-full min-h-min items-center text-content ${barVariants[barStyle.value]} ${margins().compactX ? "w-fit flex gap-2" : "grid grid-cols-[1fr_1fr_1fr]"}`}
       >
         <div class="flex justify-start items-center gap-2 group">

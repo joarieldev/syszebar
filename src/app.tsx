@@ -10,6 +10,7 @@ import { ProdMode } from "./components/mode/prod-mode";
 import { startStorageSyncModule } from "./util/modules";
 import { startStorageSyncBarStyle } from "./util/bar-style";
 import { startStorageSyncBarMargin } from "./util/bar-margin";
+import { startStorageSyncBarBorder } from "./util/bar-border";
 import { startStorageSyncContainers } from "./util/module-containers";
 import { startStorageSyncModuleColors } from "./util/module-colors";
 import { startStorageSyncModuleDisplay } from "./util/module-display";
@@ -23,6 +24,7 @@ const App = () => {
   onCleanup(startStorageSyncModule());
   onCleanup(startStorageSyncBarStyle());
   onCleanup(startStorageSyncBarMargin());
+  onCleanup(startStorageSyncBarBorder());
   onCleanup(startStorageSyncContainers());
   onCleanup(startStorageSyncModuleColors());
   onCleanup(startStorageSyncModuleDisplay());

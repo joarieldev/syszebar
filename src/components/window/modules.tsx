@@ -30,7 +30,7 @@ import {
   resetModuleColor,
   MODULES_WITH_ICON,
 } from "../../util/module-colors";
-import { X } from "../../icons/x";
+import { Rotate } from "../../icons/rotate";
 
 interface SortableProps {
   item: string;
@@ -68,7 +68,7 @@ const Sortable = (props: SortableProps) => {
               title="Reset"
               class="text-muted hover:text-content cursor-pointer"
             >
-              <X class="size-3" />
+              <Rotate class="size-3" />
             </button>
           </div>
         </Show>
