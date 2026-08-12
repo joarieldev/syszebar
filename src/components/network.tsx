@@ -17,7 +17,7 @@ const formatTraffic = (ds: { siValue: number; siUnit: string }) => {
 
 export const Network = (props: Props) => {
   return (
-    <div class="flex items-center justify-center gap-0.5 px-2">
+    <div class="flex items-center justify-center gap-1 px-2">
       <span
         class="flex justify-center items-center text-icon"
         style={{ color: moduleColors.network || undefined }}
@@ -30,18 +30,16 @@ export const Network = (props: Props) => {
           </span>
         )}
       </span>
-      <div class="flex tabular-nums text-center">
-        <span class="w-20">
-          {props.network?.traffic
-            ? `↓${formatTraffic(props.network.traffic.received)}`
-            : "---"}
-        </span>
-        <span class="w-20">
-          {props.network?.traffic
-            ? `↑${formatTraffic(props.network.traffic.transmitted)}`
-            : "---"}
-        </span>
-      </div>
+      <span class="tabular-nums whitespace-nowrap text-end w-[8ch]">
+        {props.network?.traffic
+          ? `↓${formatTraffic(props.network.traffic.received)}`
+          : "---"}
+      </span>
+      <span class="tabular-nums whitespace-nowrap text-end w-[8ch]">
+        {props.network?.traffic
+          ? `↑${formatTraffic(props.network.traffic.transmitted)}`
+          : "---"}
+      </span>
     </div>
   );
 };

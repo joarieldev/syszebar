@@ -50,7 +50,7 @@ export const Weather = (props: Props) => {
           </span>
         )}
       </span>
-      <span class="tabular-nums w-10 text-center">
+      <span class="tabular-nums w-[4ch] text-end">
         {props.weather ? `${Math.round(props.weather.celsiusTemp)}°C` : "---"}
       </span>
     </div>

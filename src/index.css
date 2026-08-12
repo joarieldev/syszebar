@@ -84,8 +84,6 @@ body {
   overflow: hidden;
   font-size: var(--text-font-size);
   font-family: var(--text-font-family);
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-line) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -97,6 +95,17 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-line);
+  background:  color-mix(in oklab, var(--color-line) 50%, transparent);
   border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-line);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line) transparent;
+  }
 }

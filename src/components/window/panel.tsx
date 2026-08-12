@@ -77,7 +77,7 @@ export function Panel(props: Props) {
       style={{ width: `${props.width}px`, height: `${props.height}px` }}
       class={`absolute top-[calc(100%+10px)] flex ${props.positionClass}`}
     >
-      <div class="rounded-lg border border-line bg-surface text-content py-1.5 px-3 overflow-y-auto size-full">
+      <div class="rounded-lg border border-line bg-surface text-content p-3 overflow-y-auto size-full">
         <span class="block mb-1 border-b border-line/50 pb-1 text-sm font-semibold text-muted text-center">
           Settings
         </span>
@@ -119,7 +119,7 @@ export function Panel(props: Props) {
                 class="accent-line size-3.5 cursor-pointer"
               />
               <div
-                class={`flex items-center justify-center gap-2 ${!theme.transparent ? "opacity-25 pointer-events-none" : ""}`}
+                class={`flex items-center justify-center gap-2 w-full max-w-40 ${!theme.transparent ? "opacity-25 pointer-events-none" : ""}`}
               >
                 <input
                   type="range"
@@ -166,10 +166,10 @@ export function Panel(props: Props) {
                 <Rotate class="size-3.5" />
               </button>
             </div>
-            <div class="grid grid-cols-2 gap-3 px-2">
+            <div class="grid grid-cols-2 gap-1.5 px-2">
               {(["top", "bottom", "x"] as const).map((side) => (
                 <div class="flex items-center gap-1" classList={{ "opacity-25 pointer-events-none": side === "x" && barMargins[barStyle.value].compactX }}>
-                  <span class="text-[10px] uppercase text-muted">
+                  <span class="text-[10px] uppercase">
                     {side}
                   </span>
                   <input
@@ -192,7 +192,7 @@ export function Panel(props: Props) {
                 </div>
               ))}
               <label class="flex items-center gap-1">
-                <span class="text-[10px] uppercase text-muted cursor-pointer">compact-x</span>
+                <span class="text-[10px] uppercase cursor-pointer">compact-x</span>
                 <input
                   type="checkbox"
                   checked={barMargins[barStyle.value].compactX}
@@ -214,9 +214,9 @@ export function Panel(props: Props) {
                 <Rotate class="size-3.5" />
               </button>
             </div>
-            <div class="grid grid-cols-2 gap-3 px-2">
+            <div class="grid grid-cols-2 gap-1.5 px-2">
               <div class="flex items-center gap-1">
-                <span class="text-[10px] uppercase text-muted">Radius</span>
+                <span class="text-[10px] uppercase">Radius</span>
                 <input
                   type="range"
                   min="0"
@@ -231,12 +231,12 @@ export function Panel(props: Props) {
                   }
                   class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
                 />
-                <span class="text-content w-10 text-center">
+                <span class="w-10 text-center">
                   {barBorders[barStyle.value].radius}
                 </span>
               </div>
               <div class="flex items-center gap-1">
-                <span class="text-[10px] uppercase text-muted">Width</span>
+                <span class="text-[10px] uppercase">Width</span>
                 <input
                   type="range"
                   min="0"
@@ -251,7 +251,7 @@ export function Panel(props: Props) {
                   }
                   class="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer accent-line"
                 />
-                <span class="text-content w-10 text-center">
+                <span class="w-10 text-center">
                   {barBorders[barStyle.value].width}
                 </span>
               </div>
@@ -266,7 +266,7 @@ export function Panel(props: Props) {
         <div class="space-y-2 text-xs">
           <div class="flex justify-between items-center gap-4">
             <span>Font family</span>
-            <div class="flex relative max-w-36">
+            <div class="flex relative w-full max-w-40">
               <input
                 type="text"
                 ref={fontTriggerRef}
@@ -297,7 +297,7 @@ export function Panel(props: Props) {
 
           <div class="flex justify-between items-center">
             <span>Font size</span>
-            <div class="flex items-center gap-1">
+            <div class="flex items-center gap-1 w-full max-w-40">
               <input
                 type="range"
                 min="8"
@@ -350,7 +350,7 @@ export function Panel(props: Props) {
 
           <div class="flex justify-between items-center gap-4">
             <span>Icon size</span>
-            <div class="flex items-center gap-1">
+            <div class="flex items-center gap-1 w-full max-w-40">
               <input
                 type="range"
                 min="8"
