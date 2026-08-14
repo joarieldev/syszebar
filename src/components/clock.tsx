@@ -100,21 +100,19 @@ export const Clock = () => {
   return (
     <div class="flex items-center justify-center gap-1.5 px-2">
       <span
-        class="flex justify-center items-center text-icon"
+        class="flex justify-center items-center text-icon leading-none text-(length:--text-icon-size)"
         style={{ color: moduleColors.clock || undefined }}
       >
         {displayMode() === "icon" ? (
           <Calendar class="size-icon" />
         ) : (
-          <span class="leading-none text-(length:--text-icon-size)">
-            {MODULE_LABELS.clock}
-          </span>
+          <>{MODULE_LABELS.clock}</>
         )}
       </span>
       <button
         onClick={() => cycleClockMode()}
         title="Click to change format"
-        class="tabular-nums whitespace-nowrap cursor-pointer"
+        class="tabular-nums whitespace-nowrap cursor-pointer leading-none"
       >
         {text()}
       </button>

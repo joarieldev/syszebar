@@ -39,18 +39,16 @@ export const Weather = (props: Props) => {
   return (
     <div class="flex items-center justify-center gap-0.5 px-2">
       <span
-        class="flex justify-center items-center text-icon"
+        class="flex justify-center items-center text-icon leading-none text-(length:--text-icon-size)"
         style={{ color: moduleColors.weather || undefined }}
       >
         {displayMode() === "icon" ? (
           props.weather && getWeatherIcon(props.weather.status)
         ) : (
-          <span class="leading-none text-(length:--text-icon-size)">
-            {MODULE_LABELS.weather}
-          </span>
+          <>{MODULE_LABELS.weather}</>
         )}
       </span>
-      <span class="tabular-nums w-[4ch] text-end">
+      <span class="tabular-nums w-[4ch] text-end leading-none">
         {props.weather ? `${Math.round(props.weather.celsiusTemp)}°C` : "---"}
       </span>
     </div>

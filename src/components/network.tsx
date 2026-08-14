@@ -19,23 +19,21 @@ export const Network = (props: Props) => {
   return (
     <div class="flex items-center justify-center gap-1 px-2">
       <span
-        class="flex justify-center items-center text-icon"
+        class="flex justify-center items-center text-icon leading-none text-(length:--text-icon-size)"
         style={{ color: moduleColors.network || undefined }}
       >
         {displayMode() === "icon" ? (
           <NetworkIcon class="size-icon" />
         ) : (
-          <span class="leading-none text-(length:--text-icon-size)">
-            {MODULE_LABELS.network}
-          </span>
+          <>{MODULE_LABELS.network}</>
         )}
       </span>
-      <span class="tabular-nums whitespace-nowrap text-end w-[8ch]">
+      <span class="tabular-nums whitespace-nowrap text-end w-[8ch] leading-none">
         {props.network?.traffic
           ? `↓${formatTraffic(props.network.traffic.received)}`
           : "---"}
       </span>
-      <span class="tabular-nums whitespace-nowrap text-end w-[8ch]">
+      <span class="tabular-nums whitespace-nowrap text-end w-[8ch] leading-none">
         {props.network?.traffic
           ? `↑${formatTraffic(props.network.traffic.transmitted)}`
           : "---"}

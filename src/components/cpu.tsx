@@ -8,20 +8,18 @@ interface Props {
 }
 
 export const Cpu = (props: Props) => (
-  <div class="flex items-center justify-center px-2">
+  <div class="flex items-center justify-center gap-0.5 px-2">
     <span
-      class="flex justify-center items-center text-icon"
+      class="flex justify-center items-center text-icon leading-none text-(length:--text-icon-size)"
       style={{ color: moduleColors.cpu || undefined }}
     >
       {displayMode() === "icon" ? (
         <CpuIcon class="size-icon" />
       ) : (
-        <span class="leading-none text-(length:--text-icon-size)">
-          {MODULE_LABELS.cpu}
-        </span>
+        <>{MODULE_LABELS.cpu}</>
       )}
     </span>
-    <span class="tabular-nums w-[4ch] text-end">
+    <span class="tabular-nums w-[4ch] text-end leading-none">
       {props.cpu ? `${Math.round(props.cpu.usage)}%` : "---"}
     </span>
   </div>

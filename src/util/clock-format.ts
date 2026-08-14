@@ -47,11 +47,6 @@ export function cycleClockMode() {
   persist();
 }
 
-export function saveClockMode(mode: ClockMode) {
-  setClockMode("value", mode);
-  persist();
-}
-
 export function startStorageSyncClockFormat() {
   const handler = (e: StorageEvent) => {
     if (e.key === STORAGE_KEY && typeof e.newValue === "string") {
