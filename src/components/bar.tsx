@@ -7,6 +7,7 @@ import { Cpu } from "./cpu";
 import { Memory } from "./memory";
 import { Network } from "./network";
 import { Weather } from "./weather";
+import { Media } from "./media";
 import { Glazewm } from "./glazewm";
 import { Settings, settingsOpen } from "./settings";
 import { module } from "../util/modules";
@@ -93,6 +94,16 @@ function renderModule(id: string, provider: IProviders, col: ColumnId) {
         <ModularBox>
           <Weather weather={provider.weather} />
         </ModularBox>
+      );
+    case "media":
+      return (
+        <>
+          {provider.media?.currentSession && (
+            <ModularBox>
+              <Media media={provider.media} />
+            </ModularBox>
+          )}
+        </>
       );
     case "settings":
       return (

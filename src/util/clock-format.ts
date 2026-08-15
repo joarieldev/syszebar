@@ -22,7 +22,7 @@ export const CLOCK_MODES: ClockMode[] = [
 ];
 
 const STORAGE_KEY = "syszebar-clock-format";
-const DEFAULT_MODE: ClockMode = "time";
+const DEFAULT_MODE: ClockMode = "datetime";
 
 function load(): ClockMode {
   const stored = localStorage.getItem(STORAGE_KEY);

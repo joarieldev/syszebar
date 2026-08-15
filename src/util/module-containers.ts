@@ -7,7 +7,7 @@ export type ContainerMap = Record<ColumnId, string[]>;
 const KEY = "syszebar-containers";
 
 export const DEFAULTS: ContainerMap = {
-  left: ["glazewm"],
+  left: ["glazewm", "media"],
   center: ["clock"],
   right: ["network", "memory", "cpu", "battery", "weather", "settings"],
 };

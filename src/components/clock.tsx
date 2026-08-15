@@ -109,13 +109,21 @@ export const Clock = () => {
           <>{MODULE_LABELS.clock}</>
         )}
       </span>
-      <button
+      {/* <span>, porque el texto dentro de un <button> se envuelve en una caja anónima interna y el UA le aplica line-height: normal (no se hereda) */}
+      <span
+        role="button"
+        tabindex="0"
         onClick={() => cycleClockMode()}
         title="Click to change format"
         class="tabular-nums whitespace-nowrap cursor-pointer leading-none"
+        onKeyDown={(e) => {
+          if (e.key !== "Enter" && e.key !== " ") return;
+          e.preventDefault();
+          cycleClockMode();
+        }}
       >
         {text()}
-      </button>
+      </span>
     </div>
   );
 };

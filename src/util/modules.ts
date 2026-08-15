@@ -1,9 +1,9 @@
 import { createStore } from "solid-js/store";
 
-export type ModuleId = "glazewm" | "clock" | "network" | "memory" | "cpu" | "battery" | "weather" | "settings";
+export type ModuleId = "glazewm" | "clock" | "network" | "memory" | "cpu" | "battery" | "weather" | "media" | "settings";
 
 export type ModuleIdWithIcon = Exclude<ModuleId, "glazewm">;
-export type ModuleIdWithLabel = Exclude<ModuleId, "glazewm" | "settings">;
+export type ModuleIdWithLabel = Exclude<ModuleId, "glazewm" | "settings" | "media">;
 
 interface ModuleDef {
   id: ModuleId;
@@ -18,11 +18,17 @@ const MODULES: ModuleDef[] = [
   { id: "cpu", label: "CPU" },
   { id: "battery", label: "Battery" },
   { id: "weather", label: "Weather" },
+  { id: "media", label: "Media" },
   { id: "settings", label: "Settings" },
 ];
 
+const DEFAULT_OFF: Partial<Record<ModuleId, boolean>> = {
+  network: false,
+  weather: false,
+};
+
 export const ALL_ENABLED: Record<ModuleId, boolean> = Object.fromEntries(
-  MODULES.map(m => [m.id, true]),
+  MODULES.map(m => [m.id, DEFAULT_OFF[m.id] ?? true]),
 ) as Record<ModuleId, boolean>;
 
 const MODULES_KEY = "syszebar-modules";

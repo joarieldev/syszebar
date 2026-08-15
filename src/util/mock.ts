@@ -2,6 +2,7 @@ import type {
   BatteryOutput,
   CpuOutput,
   GlazeWmOutput,
+  MediaOutput,
   MemoryOutput,
   NetworkOutput,
   WeatherOutput,
@@ -11,6 +12,7 @@ export type IProviders = {
   battery: BatteryOutput | null;
   cpu: CpuOutput | null;
   glazewm: GlazeWmOutput | null;
+  media: MediaOutput | null;
   memory: MemoryOutput | null;
   network: NetworkOutput | null;
   weather: WeatherOutput | null;
@@ -79,6 +81,40 @@ export const mockProviders: IProviders = {
     celsiusTemp: 24,
     fahrenheitTemp: 75,
     windSpeed: 12,
+  },
+  media: {
+    session: {
+      sessionId: "mock-session",
+      title: "Midnight City",
+      artist: "M83",
+      albumTitle: "Hurry Up, We're Dreaming",
+      albumArtist: "M83",
+      trackNumber: 3,
+      startTime: 0,
+      endTime: 250,
+      position: 76,
+      isPlaying: true,
+      isCurrentSession: true,
+    },
+    currentSession: {
+      sessionId: "mock-session",
+      title: "Midnight City",
+      artist: "M83",
+      albumTitle: "Hurry Up, We're Dreaming",
+      albumArtist: "M83",
+      trackNumber: 3,
+      startTime: 0,
+      endTime: 250,
+      position: 76,
+      isPlaying: true,
+      isCurrentSession: true,
+    },
+    allSessions: [],
+    play: async () => {},
+    pause: async () => {},
+    togglePlayPause: async () => {},
+    next: async () => {},
+    previous: async () => {},
   },
   network: {
     defaultInterface: {

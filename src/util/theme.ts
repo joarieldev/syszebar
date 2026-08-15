@@ -18,7 +18,7 @@ const initialTransparent = storedTransparent === "false" ? false : true;
 const storedAlpha = localStorage.getItem(ALPHA_KEY);
 const initialAlpha = Number(storedAlpha) || 0.6;
 
-const storedCustomColor = localStorage.getItem(CUSTOM_COLOR_KEY) || "#5622a5";
+const storedCustomColor = localStorage.getItem(CUSTOM_COLOR_KEY) || "#3b2353";
 
 export const [theme, setTheme] = createStore<{
   mode: "dark" | "light" | "custom";

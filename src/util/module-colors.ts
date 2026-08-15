@@ -10,6 +10,7 @@ export const MODULES_WITH_ICON: Record<ModuleIdWithIcon, string> = {
   cpu: "",
   battery: "",
   weather: "",
+  media: "",
   settings: "",
 };
 

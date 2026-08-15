@@ -53,10 +53,10 @@ export function Settings(props: Props) {
   });
 
   return (
-    <div ref={wrapperRef} class="flex justify-center items-center">
+    <div ref={wrapperRef} class="flex justify-center items-center h-full">
       <button
         onClick={toggle}
-        class="flex justify-center text-icon cursor-pointer px-1.5"
+        class="flex justify-center items-center h-full text-icon cursor-pointer px-1.5"
         style={{ color: moduleColors.settings || undefined }}
       >
         <DotsVertical class="size-4" />

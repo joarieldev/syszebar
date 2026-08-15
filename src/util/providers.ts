@@ -5,6 +5,7 @@ export const PROVIDERS_CONFIG = {
   memory: { type: "memory" as const },
   network: { type: "network" as const, refreshInterval: 2000 },
   weather: { type: "weather" as const },
+  media: { type: "media" as const },
 };
 
 export type ProviderId = keyof typeof PROVIDERS_CONFIG;
