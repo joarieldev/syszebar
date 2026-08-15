@@ -2,10 +2,10 @@
   "$schema": "https://github.com/glzr-io/zebar/raw/v3.3.1/resources/zpack-schema.json",
   "name": "syszebar",
   "version": "0.1.0",
-  "description": "system bar for zebar",
-  "tags": ["bar", "system"],
-  "previewImages": [],
-  "repositoryUrl": "",
+  "description": "A customizable system bar for Zebar with themed modules, media controls, and a live settings panel.",
+  "tags": ["bar", "system", "statusbar", "media"],
+  "previewImages": ["resources/preview1.webp"],
+  "repositoryUrl": "https://github.com/joarieldev/syszebar",
   "widgets": [
     {
       "name": "syszebar",
