@@ -73,6 +73,7 @@ const Sortable = (props: SortableProps) => {
           </div>
         </Show>
         <input
+          title="Hidden"
           type="checkbox"
           checked={module[props.item as ModuleId]}
           onChange={() => saveToggleModule(props.item as ModuleId)}

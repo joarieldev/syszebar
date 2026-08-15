@@ -111,6 +111,7 @@ export function Panel(props: Props) {
                   <span class="capitalize cursor-pointer">{m}</span>
                   {m === "custom" && (
                     <input
+                      title="Custom color"
                       type="color"
                       value={theme.customColor}
                       onInput={(e) => saveCustomColor(e.currentTarget.value)}
@@ -130,6 +131,7 @@ export function Panel(props: Props) {
                 checked={theme.transparent}
                 onChange={saveToggleTransparent}
                 class="accent-line size-3.5 cursor-pointer"
+                title="Toggle transparent"
               />
               <div
                 class={`flex items-center justify-center gap-2 w-full max-w-40 ${!theme.transparent ? "opacity-25 pointer-events-none" : ""}`}
@@ -333,6 +335,7 @@ export function Panel(props: Props) {
             <span>Text color</span>
             <div class="flex items-center">
               <input
+                title="Text color"
                 type="color"
                 value={typography.textColor || "#ffffff"}
                 onInput={(e) => saveTextColor(e.currentTarget.value)}
